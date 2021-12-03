@@ -1,5 +1,6 @@
 package com.money.jar;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,5 +27,12 @@ public class JarService {
 
 	public void deleteJar(int id) {
 		jarRepository.deleteById(id);
+	}
+
+	public void topUp(BigDecimal amount) {
+		List<Jar> jars = getAllJars();
+		jars.forEach(jar -> jar.setAvailableBalance(
+				jar.getAvailableBalance().add(amount.multiply(BigDecimal.valueOf(jar.getPercentage() / 100)))));
+		jars.forEach(jar -> jarRepository.save(jar));
 	}
 }
