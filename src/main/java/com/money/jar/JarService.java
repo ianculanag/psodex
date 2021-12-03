@@ -35,4 +35,12 @@ public class JarService {
 				jar.getAvailableBalance().add(amount.multiply(BigDecimal.valueOf(jar.getPercentage() / 100)))));
 		jars.forEach(jar -> jarRepository.save(jar));
 	}
+
+	public void withdrawBalance(BigDecimal amount, int jarId) {
+		Jar jar = jarRepository.findById(jarId).orElse(null);
+		if (jar != null) {
+			jar.setAvailableBalance(jar.getAvailableBalance().subtract(amount));
+		}
+		jarRepository.save(jar);
+	}
 }

@@ -1,10 +1,13 @@
 package com.money.transaction;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.money.account.Account;
+import com.money.account.AccountService;
 import com.money.jar.JarService;
 
 @Service
@@ -15,17 +18,38 @@ public class TransactionService {
 	
 	@Autowired
 	JarService jarService;
+	
+	@Autowired
+	AccountService accountService;
 
 	public List<Transaction> getAllTransactions() {
 		return transactionRepository.findAll();
 	}
 
 	public void addTransaction(Transaction transaction) {
-		if (TransactionType.INCOME == transaction.getType()) {
-			jarService.topUp(transaction.getAmount());
+		TransactionType type = transaction.getType();
+		BigDecimal amount = transaction.getAmount();
+		if (TransactionType.INCOME == type) {
+			jarService.topUp(amount);
+			Account inboundAccount = transaction.getInboundAccount();
+			accountService.transact(amount, inboundAccount == null ? null : inboundAccount.getId());
+		}
+		if (TransactionType.TRANSFER == type) {
+			transact(transaction, amount);
 		}
 		
+		if (TransactionType.EXPENSE == type || TransactionType.INVESTMENT == type || TransactionType.SAVINGS == type) {
+			jarService.withdrawBalance(amount, transaction.getJar().getId());
+			transact(transaction, amount);
+		}
 		transactionRepository.save(transaction);
+	}
+
+	private void transact(Transaction transaction, BigDecimal amount) {
+		Account inboundAccount = transaction.getInboundAccount();
+		Account outboundAccount = transaction.getOutboundAccount();
+		accountService.transact(amount, inboundAccount == null ? 0 : inboundAccount.getId(),
+				outboundAccount == null ? 0 : outboundAccount.getId());
 	}
 
 	public void updateTransaction(Transaction transaction) {

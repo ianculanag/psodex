@@ -1,6 +1,8 @@
 package com.money.account;
 
+import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,5 +28,38 @@ public class AccountService {
 
 	public void deleteAccount(int id) {
 		accountRepository.deleteById(id);
+	}
+
+	public void cashIn(BigDecimal amount, int inboundAccountId) {
+		Account account = accountRepository.findById(inboundAccountId).orElse(null);
+		account.setCurrentBalance(account.getCurrentBalance().add(amount));
+		accountRepository.save(account);
+	}
+
+	// Cash in
+	public void transact(BigDecimal amount, int inboundAccountId) {
+		Account inboundAccount = accountRepository.findById(inboundAccountId).orElse(null);
+		if (inboundAccount != null) {
+			inboundAccount.setCurrentBalance(inboundAccount.getCurrentBalance().add(amount));
+			accountRepository.save(inboundAccount);
+		}
+	}
+
+	// Cash in and cash out
+	public void transact(BigDecimal amount, int inboundAccountId, int outboundAccountId) {
+		if (inboundAccountId != 0) {
+			Account inboundAccount = accountRepository.findById(inboundAccountId).orElse(null);
+			if (inboundAccount != null) {
+				inboundAccount.setCurrentBalance(inboundAccount.getCurrentBalance().add(amount));
+				accountRepository.save(inboundAccount);
+			}
+		}
+		if (outboundAccountId != 0) {
+			Account outboundAccount = accountRepository.findById(outboundAccountId).orElse(null);
+			if (outboundAccount != null) {
+				outboundAccount.setCurrentBalance(outboundAccount.getCurrentBalance().subtract(amount));
+				accountRepository.save(outboundAccount);
+			}
+		}
 	}
 }
