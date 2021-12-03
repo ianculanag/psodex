@@ -1,4 +1,4 @@
-package com.money.jar.transaction;
+package com.money.transaction;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -10,7 +10,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.money.jar.account.Account;
+import com.money.account.Account;
+import com.money.jar.Jar;
 
 @Entity
 @Table(name = "transaction")
@@ -36,20 +37,23 @@ public class Transaction {
 	@JoinColumn(name = "outboundAccountId")
 	private Account outboundAccount;
 	
+	@ManyToOne
+	@JoinColumn(name = "jarId")
+	private Jar jar;
+	
 	public Transaction() {
 		
 	}
 
-	public Transaction(int id, TransactionType type, String details, BigDecimal amount, LocalDate date,
-			Account inboundAccount, Account outboundAccount) {
-		super();
-		this.id = id;
+	public Transaction(TransactionType type, String details, BigDecimal amount, LocalDate date,
+			Account inboundAccount, Account outboundAccount, Jar jar) {
 		this.type = type;
 		this.details = details;
 		this.amount = amount;
 		this.date = date;
 		this.inboundAccount = inboundAccount;
 		this.outboundAccount = outboundAccount;
+		this.jar = jar;
 	}
 
 	public int getId() {
@@ -106,6 +110,14 @@ public class Transaction {
 
 	public void setOutboundAccount(Account outboundAccount) {
 		this.outboundAccount = outboundAccount;
+	}
+
+	public Jar getJar() {
+		return jar;
+	}
+
+	public void setJar(Jar jar) {
+		this.jar = jar;
 	}
 
 }

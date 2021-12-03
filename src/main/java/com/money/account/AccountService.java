@@ -1,4 +1,4 @@
-package com.money.jar.account;
+package com.money.account;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.money.jar.transaction;
+package com.money.transaction;
 
 import java.util.List;
 
