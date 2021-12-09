@@ -19,7 +19,7 @@ export default class Account extends Component {
     }
 
     initialState = {
-        accountName: '', accountNumber: '', description: '', issuingBank: '', initialAmount: ''
+        accountName: '', accountNumber: '', description: '', issuingBank: '', initialBalance: ''
     }
 
     resetBook = () => {
@@ -37,9 +37,14 @@ export default class Account extends Component {
             initialBalance: this.state.initialBalance
         }
 
-        axios.post("http://localhost:3030/accounts", account).then(response => {
-            this.setState({"show": true});
-            setTimeout(() => this.setState({"show": false}), 3000);
+        axios.post("http://localhost:3030/accounts", account)
+        .then(response => {
+            if(response.data != null) {
+                this.setState({"show": true});
+                setTimeout(() => this.setState({"show": false}), 3000);
+            } else {
+                this.setState({"show":false});
+            }
         });
 
         this.setState(this.initialState);
@@ -52,12 +57,12 @@ export default class Account extends Component {
     }
 
     render() {
-        const { accountName, accountNumber, description, issuingBank, initialAmount } = this.state;
+        const { accountName, accountNumber, description, issuingBank, initialBalance } = this.state;
 
         return (
             <div>
                 <div style={{"display": this.state.show ? "block" : "none"}}>
-                    <MyToast children = {{show:this.state.show, message:"Account Saved Successfully"}}/>
+                    <MyToast children = {{show:this.state.show, message:"Account Saved Successfully", type: "success"}}/>
                 </div>
                 <Card className={"border border-dark bg-dark text-white"}>
                     <Card.Header><FontAwesomeIcon icon={faPlusSquare} /> Add Account</Card.Header>
@@ -102,11 +107,11 @@ export default class Account extends Component {
                                         placeholder="Enter the Issuing Bank" />
                                 </Form.Group>
 
-                                <Form.Group as={Col} controlId="formGridInitialAmount">
-                                    <Form.Label>Initial Amount</Form.Label>
+                                <Form.Group as={Col} controlId="formGridInitialBalance">
+                                    <Form.Label>Initial Balance</Form.Label>
                                     <Form.Control required autoComplete="off"
-                                        type="text" name="initialAmount"
-                                        value={initialAmount} onChange={this.accountChange}
+                                        type="text" name="initialBalance"
+                                        value={initialBalance} onChange={this.accountChange}
                                         className={"bg-dark text-white"}
                                         placeholder="000.00" />
                                 </Form.Group>
