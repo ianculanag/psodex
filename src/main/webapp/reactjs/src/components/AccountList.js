@@ -47,7 +47,7 @@ export default class AccountList extends Component {
                         <tbody>
                             {this.state.accounts.length === 0 ?
                                 <tr align="center">
-                                    <td colspan="6">Books Avaialble.</td>
+                                    <td colSpan="7">Books Avaialble.</td>
                                 </tr>
                                 :
                                 this.state.accounts.map((account) => (
