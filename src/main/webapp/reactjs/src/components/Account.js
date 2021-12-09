@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import { Card, Form, Button, Row, Col } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlusSquare, faSave, faUndo } from '@fortawesome/free-solid-svg-icons';
+import { faPlusSquare, faSave, faUndo, faList, faEdit } from '@fortawesome/free-solid-svg-icons';
 
 import MyToast from './MyToast';
 
@@ -16,15 +16,41 @@ export default class Account extends Component {
         this.state.show = false;
         this.accountChange = this.accountChange.bind(this);
         this.submitAccount = this.submitAccount.bind(this);
-    }
+    };
 
     initialState = {
-        accountName: '', accountNumber: '', description: '', issuingBank: '', initialBalance: ''
+        id: '', accountName: '', accountNumber: '', description: '', issuingBank: '', initialBalance: ''
+    };
+
+    componentDidMount() {
+        const accountId = +this.props.match.params.id;
+        if (accountId) {
+            this.findAccountById(accountId);
+        }
+    };
+
+    findAccountById = (accountId) => {
+        axios.get("http://localhost:3030/accounts/" + accountId)
+            .then(response => {
+                if (response.data != null) {
+                    this.setState({
+                        id: response.data.id,
+                        accountName: response.data.name,
+                        accountNumber: response.data.accountNumber,
+                        description: response.data.description,
+                        issuingBank: response.data.issuingBank,
+                        initialBalance: response.data.initialBalance
+                    });
+                }
+
+            }).catch((error) => {
+                console.lerror("Error - " + error);
+            });
     }
 
-    resetBook = () => {
+    resetAccount = () => {
         this.setState(() => this.initialState);
-    }
+    };
 
     submitAccount = event => {
         event.preventDefault();
@@ -38,35 +64,64 @@ export default class Account extends Component {
         }
 
         axios.post("http://localhost:3030/accounts", account)
-        .then(response => {
-            if(response.data != null) {
-                this.setState({"show": true});
-                setTimeout(() => this.setState({"show": false}), 3000);
-            } else {
-                this.setState({"show":false});
-            }
-        });
+            .then(response => {
+                if (response.data != null) {
+                    this.setState({ "show": true, "method": "post" });
+                    setTimeout(() => this.setState({ "show": false }), 3000);
+                } else {
+                    this.setState({ "show": false });
+                }
+            });
 
         this.setState(this.initialState);
-    }
+    };
 
-    accountChange(event) {
+    updateAccount = event => {
+        event.preventDefault();
+
+        const account = {
+            name: this.state.accountName,
+            accountNumber: this.state.accountNumber,
+            description: this.state.description,
+            issuingBank: this.state.issuingBank,
+            initialBalance: this.state.initialBalance
+        }
+
+        axios.put("http://localhost:3030/accounts/" + this.state.id, account)
+            .then(response => {
+                if (response.data != null) {
+                    this.setState({ "show": true, "method": "put" });
+                    setTimeout(() => this.setState({ "show": false }), 3000);
+                    setTimeout(() => this.accountList(), 3000);
+                } else {
+                    this.setState({ "show": false });
+                }
+            });
+
+        this.setState(this.initialState);
+    };
+
+    accountChange = event => {
         this.setState({
             [event.target.name]: event.target.value
         });
-    }
+    };
+
+    accountList = () => {
+        return this.props.history.push("/list");
+    };
 
     render() {
         const { accountName, accountNumber, description, issuingBank, initialBalance } = this.state;
 
         return (
             <div>
-                <div style={{"display": this.state.show ? "block" : "none"}}>
-                    <MyToast children = {{show:this.state.show, message:"Account Saved Successfully", type: "success"}}/>
+                <div style={{ "display": this.state.show ? "block" : "none" }}>
+                    <MyToast show={this.state.show} message={this.state.method === "put" ? "Account Updated Succesfully" : "Account Saved Successfully"} type={"success"} />
                 </div>
                 <Card className={"border border-dark bg-dark text-white"}>
-                    <Card.Header><FontAwesomeIcon icon={faPlusSquare} /> Add Account</Card.Header>
-                    <Form onSubmit={this.submitAccount} id="accountFormId">
+                    <Card.Header><FontAwesomeIcon icon={this.state.id ? faEdit : faPlusSquare} /> {this.state.id ? "Update Account" : "Add New Account"}</Card.Header>
+                    <Form onReset={this.resetAccount} onSubmit={this.state.id ? this.updateAccount : this.submitAccount} id="accountFormId">
                         <Card.Body>
                             <Row className="mb-3">
                                 <Form.Group as={Col} controlId="formGridAccountName">
@@ -118,12 +173,16 @@ export default class Account extends Component {
                             </Row>
                         </Card.Body>
                         <Card.Footer style={{ "textAlign": "right" }}>
-                            <Button variant="primary" type="submit">
-                                <FontAwesomeIcon icon={faSave} /> Submit
+                            <Button size="sm" variant="primary" type="submit">
+                                <FontAwesomeIcon icon={faSave} /> {this.state.id ? "Update" : "Save"}
                             </Button>
                             {' '}
-                            <Button variant="info" type="reset">
+                            <Button size="sm" variant="info" type="reset">
                                 <FontAwesomeIcon icon={faUndo} /> Reset
+                            </Button>
+                            {' '}
+                            <Button size="sm" variant="info" type="button" onClick={this.accountList.bind()}>
+                                <FontAwesomeIcon icon={faList} /> Account List
                             </Button>
                         </Card.Footer>
                     </Form>

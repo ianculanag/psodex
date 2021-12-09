@@ -2,7 +2,7 @@ import React from 'react';
 import './App.css';
 
 import { Container, Row, Col } from 'react-bootstrap';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 import NavigationBar from './components/NavigationBar';
 import Welcome from './components/Welcome';
@@ -21,15 +21,12 @@ function App() {
       <Container>
         <Row>
           <Col lg={12} style={marginTop}>
-            <Routes>
-              <Route path="/" element={<Welcome/>}/>
-            </Routes>
-            <Routes>
-              <Route path="/add" element={<Account/>}/>
-            </Routes>
-            <Routes>
-              <Route path="/list" element={<AccountList/>}/>
-            </Routes>
+            <Switch>
+              <Route path="/" exact component={Welcome} />
+              <Route path="/add" exact component={Account} />
+              <Route path="/edit/:id" exact component={Account} />
+              <Route path="/list" exact component={AccountList} />
+            </Switch>
           </Col>
         </Row>
       </Container>

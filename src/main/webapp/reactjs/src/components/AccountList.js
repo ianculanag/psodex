@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { Card, Table, ButtonGroup, Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faList, faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { Link } from 'react-router-dom';
 
 import MyToast from './MyToast';
 
@@ -48,7 +49,7 @@ export default class AccountList extends Component {
         return (
             <div>
                 <div style={{ "display": this.state.show ? "block" : "none" }}>
-                    <MyToast children={{ show: this.state.show, message: "Account Deleted Successfully", type:"danger" }} />
+                    <MyToast show = {this.state.show} message = {"Account Deleted Successfully"} type = {"danger" }/>
                 </div>
                 <Card className={"border border-dark bg-dark text-white"}>
                     <Card.Header><FontAwesomeIcon icon={faList} /> Account List</Card.Header>
@@ -82,7 +83,7 @@ export default class AccountList extends Component {
                                             <td>{account.currentBalance}</td>
                                             <td>
                                                 <ButtonGroup>
-                                                    <Button size="sm" variant="outline-primary"><FontAwesomeIcon icon={faEdit} /></Button>
+                                                    <Link to={"/edit/" + account.id} className="btn btn-sm btn-outline-primary"><FontAwesomeIcon icon={faEdit} /></Link>{' '}
                                                     <Button size="sm" variant="outline-danger"
                                                         onClick={this.deleteAccount.bind(this, account.id)}><FontAwesomeIcon icon={faTrash} /></Button>
                                                 </ButtonGroup>

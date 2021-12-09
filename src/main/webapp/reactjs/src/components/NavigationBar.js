@@ -12,8 +12,8 @@ export default class NavigationBar extends Component {
                         <img src="https://cdn.iconscout.com/icon/free/png-256/wallet-2130848-1794979.png" width="25" height="25" alt="ePon Logo" />ePon
                     </Link>
                     <Nav className="me-auto">
-                        <Link to={"add"} className="nav-link">Add Account</Link>
-                        <Link to={"list"} className="nav-link">Account List</Link>
+                        <Link to={"/add"} className="nav-link">Add Account</Link>
+                        <Link to={"/list"} className="nav-link">Account List</Link>
                     </Nav>
                 </Container>
             </Navbar>

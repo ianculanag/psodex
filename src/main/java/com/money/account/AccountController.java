@@ -22,6 +22,11 @@ public class AccountController {
 		return accountService.getAllAccounts();
 	}
 	
+	@RequestMapping(method=RequestMethod.GET, value="/accounts/{id}")
+	public Account getAccountById(@PathVariable int id) {
+		return accountService.getAccountById(id);
+	}
+	
 	@RequestMapping(method=RequestMethod.POST, value="/accounts")
 	public void addAccount(@RequestBody Account account) {
 		accountService.addAccount(account);

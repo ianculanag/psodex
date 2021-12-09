@@ -16,6 +16,10 @@ public class AccountService {
 		return accountRepository.findAll();
 	}
 
+	public Account getAccountById(int id) {
+		return accountRepository.findById(id).get();
+	}
+
 	public void addAccount(Account account) {
 		accountRepository.save(account);
 	}
