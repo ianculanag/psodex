@@ -15,7 +15,7 @@ public class Account {
 	@GeneratedValue
 	private int id;
 	
-	private String accountNo;
+	private String accountNumber;
 	
 	private String name;
 	
@@ -31,9 +31,9 @@ public class Account {
 
 	}
 
-	public Account(String accountNo, String name, BigDecimal initialBalance, BigDecimal currentBalance,
+	public Account(String accountNumber, String name, BigDecimal initialBalance, BigDecimal currentBalance,
 			String description, String issuingBank) {
-		this.accountNo = accountNo;
+		this.accountNumber = accountNumber;
 		this.name = name;
 		this.initialBalance = initialBalance;
 		this.currentBalance = currentBalance;
@@ -49,12 +49,12 @@ public class Account {
 		this.id = id;
 	}
 
-	public String getAccountNo() {
-		return accountNo;
+	public String getAccountNumber() {
+		return accountNumber;
 	}
 
-	public void setAccountNo(String accountNo) {
-		this.accountNo = accountNo;
+	public void setAccountNumber(String accountNumber) {
+		this.accountNumber = accountNumber;
 	}
 
 	public String getName() {

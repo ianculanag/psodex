@@ -54,7 +54,7 @@ export default class Account extends Component {
 
                             <Form.Group as={Col} controlId="formGridAccountNumber">
                                 <Form.Label>Account Number</Form.Label>
-                                <Form.Control required
+                                <Form.Control
                                     type="text" name="accountNumber"
                                     value={this.state.accountNumber}
                                     onChange={this.accountChange}
@@ -65,7 +65,7 @@ export default class Account extends Component {
 
                         <Form.Group className="mb-3" controlId="formGridDescription">
                             <Form.Label>Description</Form.Label>
-                            <Form.Control required
+                            <Form.Control
                                 type="text" name="description"
                                 value={this.state.description}
                                 onChange={this.accountChange}
