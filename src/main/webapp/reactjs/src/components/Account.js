@@ -19,7 +19,7 @@ export default class Account extends Component {
     };
 
     initialState = {
-        id: '', accountName: '', accountNumber: '', description: '', issuingBank: '', initialBalance: ''
+        accountId: '', accountName: '', accountNumber: '', description: '', issuingBank: '', initialBalance: ''
     };
 
     componentDidMount() {
@@ -34,12 +34,12 @@ export default class Account extends Component {
             .then(response => {
                 if (response.data != null) {
                     this.setState({
-                        id: response.data.id,
-                        accountName: response.data.name,
+                        accountId: response.data.accountId,
+                        accountName: response.data.accountName,
                         accountNumber: response.data.accountNumber,
                         description: response.data.description,
                         issuingBank: response.data.issuingBank,
-                        initialBalance: response.data.initialBalance
+                        initialBalance: response.data.initialBalanceRaw
                     });
                 }
 
@@ -56,7 +56,7 @@ export default class Account extends Component {
         event.preventDefault();
 
         const account = {
-            name: this.state.accountName,
+            accountName: this.state.accountName,
             accountNumber: this.state.accountNumber,
             description: this.state.description,
             issuingBank: this.state.issuingBank,
@@ -80,14 +80,14 @@ export default class Account extends Component {
         event.preventDefault();
 
         const account = {
-            name: this.state.accountName,
+            accountName: this.state.accountName,
             accountNumber: this.state.accountNumber,
             description: this.state.description,
             issuingBank: this.state.issuingBank,
             initialBalance: this.state.initialBalance
         }
 
-        axios.put("http://localhost:3030/accounts/" + this.state.id, account)
+        axios.put("http://localhost:3030/accounts/" + this.state.accountId, account)
             .then(response => {
                 if (response.data != null) {
                     this.setState({ "show": true, "method": "put" });
@@ -120,8 +120,8 @@ export default class Account extends Component {
                     <MyToast show={this.state.show} message={this.state.method === "put" ? "Account Updated Succesfully" : "Account Saved Successfully"} type={"success"} />
                 </div>
                 <Card className={"border border-dark bg-dark text-white"}>
-                    <Card.Header><FontAwesomeIcon icon={this.state.id ? faEdit : faPlusSquare} /> {this.state.id ? "Update Account" : "Add New Account"}</Card.Header>
-                    <Form onReset={this.resetAccount} onSubmit={this.state.id ? this.updateAccount : this.submitAccount} id="accountFormId">
+                    <Card.Header><FontAwesomeIcon icon={this.state.accountId ? faEdit : faPlusSquare} /> {this.state.accountId ? "Update Account" : "Add New Account"}</Card.Header>
+                    <Form onReset={this.resetAccount} onSubmit={this.state.accountId ? this.updateAccount : this.submitAccount} id="accountFormId">
                         <Card.Body>
                             <Row className="mb-3">
                                 <Form.Group as={Col} controlId="formGridAccountName">
@@ -174,7 +174,7 @@ export default class Account extends Component {
                         </Card.Body>
                         <Card.Footer style={{ "textAlign": "right" }}>
                             <Button size="sm" variant="primary" type="submit">
-                                <FontAwesomeIcon icon={faSave} /> {this.state.id ? "Update" : "Save"}
+                                <FontAwesomeIcon icon={faSave} /> {this.state.accountId ? "Update" : "Save"}
                             </Button>
                             {' '}
                             <Button size="sm" variant="info" type="reset">

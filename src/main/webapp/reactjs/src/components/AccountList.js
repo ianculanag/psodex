@@ -37,7 +37,7 @@ export default class AccountList extends Component {
                     this.setState({ "show": true });
                     setTimeout(() => this.setState({ "show": false }), 3000);
                     this.setState({
-                        accounts: this.state.accounts.filter(account => account.id !== accountId)
+                        accounts: this.state.accounts.filter(account => account.accountId !== accountId)
                     });
                 } else {
                     this.setState({ "show": false });
@@ -73,9 +73,9 @@ export default class AccountList extends Component {
                                     </tr>
                                     :
                                     this.state.accounts.map((account) => (
-                                        <tr key={account.id}>
-                                            <td>{account.id}</td>
-                                            <td>{account.name}</td>
+                                        <tr key={account.accountId}>
+                                            <td>{account.accountId}</td>
+                                            <td>{account.accountName}</td>
                                             <td>{account.accountNumber}</td>
                                             <td>{account.description}</td>
                                             <td>{account.issuingBank}</td>
@@ -83,9 +83,9 @@ export default class AccountList extends Component {
                                             <td>{account.currentBalance}</td>
                                             <td>
                                                 <ButtonGroup>
-                                                    <Link to={"/edit/" + account.id} className="btn btn-sm btn-outline-primary"><FontAwesomeIcon icon={faEdit} /></Link>{' '}
+                                                    <Link to={"/edit/" + account.accountId} className="btn btn-sm btn-outline-primary"><FontAwesomeIcon icon={faEdit} /></Link>{' '}
                                                     <Button size="sm" variant="outline-danger"
-                                                        onClick={this.deleteAccount.bind(this, account.id)}><FontAwesomeIcon icon={faTrash} /></Button>
+                                                        onClick={this.deleteAccount.bind(this, account.accountId)}><FontAwesomeIcon icon={faTrash} /></Button>
                                                 </ButtonGroup>
                                             </td>
                                         </tr>
