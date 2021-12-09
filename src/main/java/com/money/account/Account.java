@@ -24,18 +24,21 @@ public class Account {
 	private BigDecimal currentBalance;
 	
 	private String description;
+	
+	private String issuingBank;
 
 	public Account() {
 
 	}
 
 	public Account(String accountNo, String name, BigDecimal initialBalance, BigDecimal currentBalance,
-			String description) {
+			String description, String issuingBank) {
 		this.accountNo = accountNo;
 		this.name = name;
 		this.initialBalance = initialBalance;
 		this.currentBalance = currentBalance;
 		this.description = description;
+		this.issuingBank = issuingBank;
 	}
 
 	public int getId() {
@@ -84,6 +87,14 @@ public class Account {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public String getIssuingBank() {
+		return issuingBank;
+	}
+
+	public void setIssuingBank(String issuingBank) {
+		this.issuingBank = issuingBank;
 	}
 
 }
