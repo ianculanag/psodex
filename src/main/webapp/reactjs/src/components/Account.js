@@ -19,7 +19,7 @@ export default class Account extends Component {
     };
 
     initialState = {
-        accountId: '', accountName: '', accountNumber: '', description: '', issuingBank: '', initialBalance: ''
+        accountId: '', accountName: '', accountNumber: '', description: '', issuingBank: '', balance: ''
     };
 
     componentDidMount() {
@@ -39,7 +39,7 @@ export default class Account extends Component {
                         accountNumber: response.data.accountNumber,
                         description: response.data.description,
                         issuingBank: response.data.issuingBank,
-                        initialBalance: response.data.initialBalanceRaw
+                        balance: response.data.balanceRaw
                     });
                 }
 
@@ -60,7 +60,7 @@ export default class Account extends Component {
             accountNumber: this.state.accountNumber,
             description: this.state.description,
             issuingBank: this.state.issuingBank,
-            initialBalance: this.state.initialBalance
+            balance: this.state.balance
         }
 
         axios.post("http://localhost:3030/accounts", account)
@@ -84,7 +84,7 @@ export default class Account extends Component {
             accountNumber: this.state.accountNumber,
             description: this.state.description,
             issuingBank: this.state.issuingBank,
-            initialBalance: this.state.initialBalance
+            balance: this.state.balance
         }
 
         axios.put("http://localhost:3030/accounts/" + this.state.accountId, account)
@@ -112,7 +112,7 @@ export default class Account extends Component {
     };
 
     render() {
-        const { accountName, accountNumber, description, issuingBank, initialBalance } = this.state;
+        const { accountName, accountNumber, description, issuingBank, balance } = this.state;
 
         return (
             <div>
@@ -162,11 +162,11 @@ export default class Account extends Component {
                                         placeholder="Enter the Issuing Bank" />
                                 </Form.Group>
 
-                                <Form.Group as={Col} controlId="formGridInitialBalance">
-                                    <Form.Label>Initial Balance</Form.Label>
+                                <Form.Group as={Col} controlId="formGridBalance">
+                                    <Form.Label>{this.state.accountId ? "Current" : "Initial"} Balance</Form.Label>
                                     <Form.Control required autoComplete="off"
-                                        type="text" name="initialBalance"
-                                        value={initialBalance} onChange={this.accountChange}
+                                        type="text" name="balance"
+                                        value={balance} onChange={this.accountChange}
                                         className={"bg-dark text-white"}
                                         placeholder="000.00" />
                                 </Form.Group>

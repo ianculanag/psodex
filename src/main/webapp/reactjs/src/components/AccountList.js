@@ -62,8 +62,7 @@ export default class AccountList extends Component {
                                     <th>Account Number</th>
                                     <th>Description</th>
                                     <th>Issuing Bank</th>
-                                    <th>Initial Balance</th>
-                                    <th>Current Balance</th>
+                                    <th>Balance</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -79,8 +78,7 @@ export default class AccountList extends Component {
                                             <td>{account.accountNumber}</td>
                                             <td>{account.description}</td>
                                             <td>{account.issuingBank}</td>
-                                            <td>{account.initialBalance}</td>
-                                            <td>{account.currentBalance}</td>
+                                            <td>{account.balance}</td>
                                             <td>
                                                 <ButtonGroup>
                                                     <Link to={"/edit/" + account.accountId} className="btn btn-sm btn-outline-primary"><FontAwesomeIcon icon={faEdit} /></Link>{' '}

@@ -47,14 +47,13 @@ public class AccountController {
 
 	private Account instantiateModel(AccountRequest accountRequest) {
 		return new Account(accountRequest.getAccountNumber(), accountRequest.getAccountName(),
-				accountRequest.getInitialBalance(), accountRequest.getCurrentBalance(), accountRequest.getDescription(),
-				accountRequest.getIssuingBank());
+				accountRequest.getBalance(), accountRequest.getDescription(), accountRequest.getIssuingBank());
 	}
 
 	private AccountResponse prepareResponse(Account account) {
 		if (account == null) return null;
 		AccountResponse accountResponse = new AccountResponse(account.getId(), account.getAccountNumber(),
-				account.getName(), account.getInitialBalance(), account.getCurrentBalance(), account.getDescription(),
+				account.getName(), account.getBalance(), account.getDescription(),
 				account.getIssuingBank());
 		return accountResponse;
 	}

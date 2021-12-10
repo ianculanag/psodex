@@ -5,24 +5,23 @@ import java.math.BigDecimal;
 public class AccountRequest {
 
 	private String accountNumber;
-	
+
 	private String accountName;
-	
-	private BigDecimal initialBalance;
-	
-	private BigDecimal currentBalance;
-	
+
+	private BigDecimal balance;
+
 	private String description;
-	
+
 	private String issuingBank;
-	
-	public AccountRequest() {}
-	
-	public AccountRequest(String accountNumber, String accountName, BigDecimal initialBalance, BigDecimal currentBalance, String description, String issuingBank) {
+
+	public AccountRequest() {
+	}
+
+	public AccountRequest(String accountNumber, String accountName, BigDecimal balance, String description,
+			String issuingBank) {
 		this.accountNumber = accountNumber;
 		this.accountName = accountName;
-		this.initialBalance = initialBalance;
-		this.currentBalance = currentBalance;
+		this.balance = balance;
 		this.description = description;
 		this.issuingBank = issuingBank;
 	}
@@ -43,20 +42,12 @@ public class AccountRequest {
 		this.accountName = accountName;
 	}
 
-	public BigDecimal getInitialBalance() {
-		return initialBalance;
+	public BigDecimal getBalance() {
+		return balance;
 	}
 
-	public void setInitialBalance(BigDecimal initialBalance) {
-		this.initialBalance = initialBalance;
-	}
-
-	public BigDecimal getCurrentBalance() {
-		return currentBalance;
-	}
-
-	public void setCurrentBalance(BigDecimal currentBalance) {
-		this.currentBalance = currentBalance;
+	public void setBalance(BigDecimal balance) {
+		this.balance = balance;
 	}
 
 	public String getDescription() {
@@ -74,5 +65,5 @@ public class AccountRequest {
 	public void setIssuingBank(String issuingBank) {
 		this.issuingBank = issuingBank;
 	}
-	
+
 }

@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class AccountService {
-	
+
 	@Autowired
 	AccountRepository accountRepository;
 
@@ -35,7 +35,7 @@ public class AccountService {
 
 	public void cashIn(BigDecimal amount, int inboundAccountId) {
 		Account account = accountRepository.findById(inboundAccountId).orElse(null);
-		account.setCurrentBalance(account.getCurrentBalance().add(amount));
+		account.setBalance(account.getBalance().add(amount));
 		accountRepository.save(account);
 	}
 
@@ -43,7 +43,7 @@ public class AccountService {
 	public void transact(BigDecimal amount, int inboundAccountId) {
 		Account inboundAccount = accountRepository.findById(inboundAccountId).orElse(null);
 		if (inboundAccount != null) {
-			inboundAccount.setCurrentBalance(inboundAccount.getCurrentBalance().add(amount));
+			inboundAccount.setBalance(inboundAccount.getBalance().add(amount));
 			accountRepository.save(inboundAccount);
 		}
 	}
@@ -53,14 +53,14 @@ public class AccountService {
 		if (inboundAccountId != 0) {
 			Account inboundAccount = accountRepository.findById(inboundAccountId).orElse(null);
 			if (inboundAccount != null) {
-				inboundAccount.setCurrentBalance(inboundAccount.getCurrentBalance().add(amount));
+				inboundAccount.setBalance(inboundAccount.getBalance().add(amount));
 				accountRepository.save(inboundAccount);
 			}
 		}
 		if (outboundAccountId != 0) {
 			Account outboundAccount = accountRepository.findById(outboundAccountId).orElse(null);
 			if (outboundAccount != null) {
-				outboundAccount.setCurrentBalance(outboundAccount.getCurrentBalance().subtract(amount));
+				outboundAccount.setBalance(outboundAccount.getBalance().subtract(amount));
 				accountRepository.save(outboundAccount);
 			}
 		}
