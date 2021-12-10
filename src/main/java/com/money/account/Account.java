@@ -29,6 +29,10 @@ public class Account {
 
 	}
 
+	public Account(int id) {
+		this.id = id;
+	}
+
 	public Account(String accountNumber, String name, BigDecimal balance, String description, String issuingBank) {
 		this.accountNumber = accountNumber;
 		this.name = name;

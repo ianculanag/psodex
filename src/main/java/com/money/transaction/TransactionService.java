@@ -37,9 +37,11 @@ public class TransactionService {
 		if (TransactionType.TRANSFER == type) {
 			transact(transaction, amount);
 		}
-		
+
 		if (TransactionType.EXPENSE == type || TransactionType.INVESTMENT == type || TransactionType.SAVINGS == type) {
-			jarService.withdrawBalance(amount, transaction.getJar().getId());
+			if (transaction.getJar() != null) {
+				jarService.withdrawBalance(amount, transaction.getJar().getId());
+			}
 			transact(transaction, amount);
 		}
 		transactionRepository.save(transaction);

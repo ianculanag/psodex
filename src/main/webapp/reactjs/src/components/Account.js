@@ -108,7 +108,7 @@ export default class Account extends Component {
     };
 
     accountList = () => {
-        return this.props.history.push("/list");
+        return this.props.history.push("/account-list");
     };
 
     render() {

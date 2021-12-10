@@ -9,6 +9,7 @@ import Welcome from './components/Welcome';
 import Footer from './components/Footer';
 import Account from './components/Account';
 import AccountList from './components/AccountList';
+import RecordTransaction from './components/RecordTransaction';
 
 function App() {
   const marginTop = {
@@ -23,9 +24,10 @@ function App() {
           <Col lg={12} style={marginTop}>
             <Switch>
               <Route path="/" exact component={Welcome} />
-              <Route path="/add" exact component={Account} />
-              <Route path="/edit/:id" exact component={Account} />
-              <Route path="/list" exact component={AccountList} />
+              <Route path="/add-account" exact component={Account} />
+              <Route path="/edit-account/:id" exact component={Account} />
+              <Route path="/account-list" exact component={AccountList} />
+              <Route path="/record-transaction" exact component={RecordTransaction} />
             </Switch>
           </Col>
         </Row>

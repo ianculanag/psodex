@@ -30,6 +30,10 @@ public class Jar {
 
 	}
 
+	public Jar(int id) {
+		this.id = id;
+	}
+
 	public Jar(String name, String description, double percentage, BigDecimal availableBalance,
 			LocalDate dateCreated) {
 		this.name = name;

@@ -81,7 +81,7 @@ export default class AccountList extends Component {
                                             <td>{account.balance}</td>
                                             <td>
                                                 <ButtonGroup>
-                                                    <Link to={"/edit/" + account.accountId} className="btn btn-sm btn-outline-primary"><FontAwesomeIcon icon={faEdit} /></Link>{' '}
+                                                    <Link to={"/edit-account/" + account.accountId} className="btn btn-sm btn-outline-primary"><FontAwesomeIcon icon={faEdit} /></Link>{' '}
                                                     <Button size="sm" variant="outline-danger"
                                                         onClick={this.deleteAccount.bind(this, account.accountId)}><FontAwesomeIcon icon={faTrash} /></Button>
                                                 </ButtonGroup>
