@@ -1,6 +1,7 @@
 package com.money.transaction;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -21,8 +22,9 @@ public class TransactionController {
 	TransactionService transactionService;
 
 	@RequestMapping(method=RequestMethod.GET, value="/transactions")
-	public List<Transaction> getAllTransactions() {
-		return transactionService.getAllTransactions();
+	public List<TransactionResponse> getAllTransactions() {
+		return transactionService.getAllTransactions().stream().map(transaction -> prepareResponse(transaction))
+				.collect(Collectors.toList());
 	}
 	
 	@RequestMapping(method=RequestMethod.POST, value="/transactions")
@@ -50,5 +52,17 @@ public class TransactionController {
 		return new Transaction(TransactionType.valueOf(transactionRequest.getTransactionType()),
 				transactionRequest.getTransactionDetails(), transactionRequest.getTransactionAmount(),
 				transactionRequest.getTransactionDate(), inboundAccount, outboundAccount, jar);
+	}
+
+	private TransactionResponse prepareResponse(Transaction transaction) {
+		if (transaction == null)
+			return null;
+		TransactionResponse transactionResponse = new TransactionResponse(transaction.getId(), transaction.getAmount(),
+				transaction.getDate(), transaction.getDetails(), transaction.getType().name(),
+				transaction.getInboundAccount() == null ? 0 : transaction.getInboundAccount().getId(),
+				transaction.getInboundAccount() == null ? "" : transaction.getInboundAccount().getName(),
+				transaction.getOutboundAccount() == null ? 0 : transaction.getOutboundAccount().getId(),
+				transaction.getOutboundAccount() == null ? "" : transaction.getOutboundAccount().getName());
+		return transactionResponse;
 	}
 }
