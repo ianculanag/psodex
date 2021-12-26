@@ -12,10 +12,14 @@ import AccountList from './components/AccountList';
 import RecordTransaction from './components/RecordTransaction';
 import TransactionList from './components/TransactionList';
 
-function App() {
+export default function App() {
   const marginTop = {
     marginTop: "20px"
   }
+
+  const heading = "Welcome to ePon!";
+  const desc = "“It's not now much money you make, but how much money you keep, how hard it works for you, and how many generations you keep it for.”";
+  const footer = "Robert Kiyosaki";
 
   return (
     <Router>
@@ -24,7 +28,7 @@ function App() {
         <Row>
           <Col lg={12} style={marginTop}>
             <Switch>
-              <Route path="/" exact component={Welcome} />
+              <Route path="/" exact component={() => <Welcome heading={heading} desc={desc} footer={footer}/> } />
               <Route path="/add-account" exact component={Account} />
               <Route path="/edit-account/:id" exact component={Account} />
               <Route path="/account-list" exact component={AccountList} />
@@ -38,5 +42,3 @@ function App() {
     </Router>
   );
 }
-
-export default App;
