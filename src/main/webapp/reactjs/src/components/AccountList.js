@@ -23,26 +23,29 @@ export default class AccountList extends Component {
     }
 
     findAllAccounts() {
-        axios.get("http://localhost:3030/accounts")
-            .then(response => response.data)
+        fetch("http://localhost:3030/accounts")
+            .then(response => response.json())
             .then((data) => {
                 this.setState({ accounts: data });
             });
     }
 
     deleteAccount = (accountId) => {
-        axios.delete("http://localhost:3030/accounts/" + accountId)
-            .then(response => {
-                if (response.data != null) {
-                    this.setState({ "show": true });
-                    setTimeout(() => this.setState({ "show": false }), 3000);
-                    this.setState({
-                        accounts: this.state.accounts.filter(account => account.accountId !== accountId)
-                    });
-                } else {
-                    this.setState({ "show": false });
-                }
-            });
+        fetch("http://localhost:3030/accounts/" + accountId, {
+            method: 'DELETE'
+        })
+        .then(response => response.json())
+        .then((account) => {
+            if (account != null) {
+                this.setState({ "show": true });
+                setTimeout(() => this.setState({ "show": false }), 3000);
+                this.setState({
+                    accounts: this.state.accounts.filter(account => account.accountId !== accountId)
+                });
+            } else {
+                this.setState({ "show": false });
+            }
+        });
     };
 
     render() {

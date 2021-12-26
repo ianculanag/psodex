@@ -30,16 +30,17 @@ export default class Account extends Component {
     };
 
     findAccountById = (accountId) => {
-        axios.get("http://localhost:3030/accounts/" + accountId)
-            .then(response => {
-                if (response.data != null) {
+        fetch("http://localhost:3030/accounts/" + accountId)
+        .then(response => response.json())
+            .then((account) => {
+                if (account) {
                     this.setState({
-                        accountId: response.data.accountId,
-                        accountName: response.data.accountName,
-                        accountNumber: response.data.accountNumber,
-                        description: response.data.description,
-                        issuingBank: response.data.issuingBank,
-                        balance: response.data.balanceRaw
+                        accountId: account.accountId,
+                        accountName: account.accountName,
+                        accountNumber: account.accountNumber,
+                        description: account.description,
+                        issuingBank: account.issuingBank,
+                        balance: account.balanceRaw
                     });
                 }
 
@@ -63,15 +64,23 @@ export default class Account extends Component {
             balance: this.state.balance
         }
 
-        axios.post("http://localhost:3030/accounts", account)
-            .then(response => {
-                if (response.data != null) {
-                    this.setState({ "show": true, "method": "post" });
-                    setTimeout(() => this.setState({ "show": false }), 3000);
-                } else {
-                    this.setState({ "show": false });
-                }
-            });
+        const headers = new Headers();
+        headers.append('Content-Type', 'application/json')
+
+        fetch("http://localhost:3030/accounts", {
+            method: 'POST',
+            body: JSON.stringify(account),
+            headers
+        })
+        .then(response => response.json())
+        .then((account) => {
+            if (account) {
+                this.setState({ "show": true, "method": "post" });
+                setTimeout(() => this.setState({ "show": false }), 3000);
+            } else {
+                this.setState({ "show": false });
+            }
+        });
 
         this.setState(this.initialState);
     };
@@ -87,16 +96,24 @@ export default class Account extends Component {
             balance: this.state.balance
         }
 
-        axios.put("http://localhost:3030/accounts/" + this.state.accountId, account)
-            .then(response => {
-                if (response.data != null) {
-                    this.setState({ "show": true, "method": "put" });
-                    setTimeout(() => this.setState({ "show": false }), 3000);
-                    setTimeout(() => this.accountList(), 3000);
-                } else {
-                    this.setState({ "show": false });
-                }
-            });
+        const headers = new Headers();
+        headers.append('Content-Type', 'application/json')
+
+        fetch("http://localhost:3030/accounts/" + this.state.accountId, {
+            method: 'PUT',
+            body: JSON.stringify(account),
+            headers
+        })
+        .then(response => response.json())
+        .then((account) => {
+            if (account) {
+                this.setState({ "show": true, "method": "put" });
+                setTimeout(() => this.setState({ "show": false }), 3000);
+                setTimeout(() => this.accountList(), 3000);
+            } else {
+                this.setState({ "show": false });
+            }
+        });
 
         this.setState(this.initialState);
     };
