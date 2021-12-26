@@ -15,6 +15,7 @@ export default class NavigationBar extends Component {
                         <Link to={"/add-account"} className="nav-link">Add Account</Link>
                         <Link to={"/account-list"} className="nav-link">Account List</Link>
                         <Link to={"/record-transaction"} className="nav-link">Record Transaction</Link>
+                        <Link to={"/transaction-list"} className="nav-link">Transaction List</Link>
                     </Nav>
                 </Container>
             </Navbar>

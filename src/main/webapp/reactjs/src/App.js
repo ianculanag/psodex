@@ -10,6 +10,7 @@ import Footer from './components/Footer';
 import Account from './components/Account';
 import AccountList from './components/AccountList';
 import RecordTransaction from './components/RecordTransaction';
+import TransactionList from './components/TransactionList';
 
 function App() {
   const marginTop = {
@@ -28,6 +29,7 @@ function App() {
               <Route path="/edit-account/:id" exact component={Account} />
               <Route path="/account-list" exact component={AccountList} />
               <Route path="/record-transaction" exact component={RecordTransaction} />
+              <Route path="/transaction-list" exact component={TransactionList} />
             </Switch>
           </Col>
         </Row>

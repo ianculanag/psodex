@@ -39,25 +39,6 @@ export default class RecordTransaction extends Component {
         }
     };
 
-    /*findAccountById = (accountId) => {
-        axios.get("http://localhost:3030/accounts/" + accountId)
-            .then(response => {
-                if (response.data != null) {
-                    this.setState({
-                        accountId: response.data.accountId,
-                        accountName: response.data.accountName,
-                        accountNumber: response.data.accountNumber,
-                        description: response.data.description,
-                        issuingBank: response.data.issuingBank,
-                        balance: response.data.balanceRaw
-                    });
-                }
-
-            }).catch((error) => {
-                console.lerror("Error - " + error);
-            });
-    }*/
-
     resetAccount = () => {
         this.setState(() => this.initialState);
     };
@@ -92,46 +73,11 @@ export default class RecordTransaction extends Component {
         this.setState(this.initialState);
     };
 
-    /*updateAccount = event => {
-        event.preventDefault();
-
-        const transaction = {
-            transactionId: this.state.transactionId,
-            transactionAmount: this.state.transactionAmount,
-            transactionDate: this.state.transactionDate,
-            transactionDetails: this.state.transactionDetails,
-            transactionType: this.state.transactionType,
-            inboundAccount: this.state.inboundAccount,
-            inboundAccountId: this.state.inboundAccountId,
-            outboundAccount: this.state.outboundAccount,
-            outboundAccountId: this.state.outboundAccountId,
-            jarName: this.state.jarName,
-            jarId: this.state.jarId
-        }
-
-        axios.put("http://localhost:3030/accounts/" + this.state.accountId, transaction)
-            .then(response => {
-                if (response.data != null) {
-                    this.setState({ "show": true, "method": "put" });
-                    setTimeout(() => this.setState({ "show": false }), 3000);
-                    setTimeout(() => this.accountList(), 3000);
-                } else {
-                    this.setState({ "show": false });
-                }
-            });
-
-        this.setState(this.initialState);
-    };*/
-
     transactionChange = event => {
         this.setState({
             [event.target.name]: event.target.value
         });
     };
-
-    /*accountList = () => {
-        return this.props.history.push("/account-list");
-    };*/
 
     render() {
 
@@ -207,20 +153,20 @@ export default class RecordTransaction extends Component {
                                 </Form.Group>
                             </Row>
                             <Row className="mb-3">
-                                <Form.Group as={Col} controlId="formGridInboundAccountId">
+                                <Form.Group as={Col} controlId="formGridOutboundAccountId">
                                     <Form.Label>Deduct amount from: </Form.Label>
-                                    <Form.Control required autoComplete="off"
-                                        type="text" name="inboundAccountId"
-                                        value={inboundAccountId} onChange={this.transactionChange}
+                                    <Form.Control autoComplete="off"
+                                        type="text" name="outboundAccountId"
+                                        value={outboundAccountId} onChange={this.transactionChange}
                                         className={"bg-dark text-white"}
                                         placeholder="Select Account.." />
                                 </Form.Group>
 
-                                <Form.Group as={Col} controlId="formGridOutboundAccountId">
+                                <Form.Group as={Col} controlId="formGridInboundAccountId">
                                     <Form.Label>Add amount to: </Form.Label>
                                     <Form.Control autoComplete="off"
-                                        type="text" name="outboundAccountId"
-                                        value={outboundAccountId} onChange={this.transactionChange}
+                                        type="text" name="inboundAccountId"
+                                        value={inboundAccountId} onChange={this.transactionChange}
                                         className={"bg-dark text-white"}
                                         placeholder="Select Account.." />
                                 </Form.Group>
