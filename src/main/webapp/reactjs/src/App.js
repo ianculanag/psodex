@@ -11,6 +11,8 @@ import Account from './components/Account';
 import AccountList from './components/AccountList';
 import RecordTransaction from './components/RecordTransaction';
 import TransactionList from './components/TransactionList';
+import Register from './components/User/Register';
+import Login from './components/User/Login';
 
 export default function App() {
   const marginTop = {
@@ -34,6 +36,9 @@ export default function App() {
               <Route path="/account-list" exact component={AccountList} />
               <Route path="/record-transaction" exact component={RecordTransaction} />
               <Route path="/transaction-list" exact component={TransactionList} />
+              <Route path="/register" exact component={Register} />
+              <Route path="/login" exact component={Login} />
+              <Route path="/logout" exact component={Login} />
             </Switch>
           </Col>
         </Row>
