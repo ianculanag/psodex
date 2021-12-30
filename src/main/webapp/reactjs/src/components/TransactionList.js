@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {fetchTransactions} from '../services/transaction/transactionActions';
+import {fetchTransactions} from '../services/index';
 import { Card, Table, InputGroup, FormControl, Button, Alert} from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faList, faStepBackward, faFastBackward, faStepForward, faFastForward } from '@fortawesome/free-solid-svg-icons';

@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 
+import {connect} from 'react-redux';
+import {saveAccount} from '../services/index';
+
 import { Card, Form, Button, Row, Col } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlusSquare, faSave, faUndo, faList, faEdit } from '@fortawesome/free-solid-svg-icons';
-
 import MyToast from './MyToast';
 
-export default class Account extends Component {
+class Account extends Component {
 
     constructor(props) {
         super(props);
@@ -62,26 +64,18 @@ export default class Account extends Component {
             balance: this.state.balance
         }
 
-        const headers = new Headers();
-        headers.append('Content-Type', 'application/json')
-
-        fetch("http://localhost:3030/accounts", {
-            method: 'POST',
-            body: JSON.stringify(account),
-            headers
-        })
-        .then(response => response.json())
-        .then((account) => {
-            if (account) {
-                this.setState({ "show": true, "method": "post" });
-                setTimeout(() => this.setState({ "show": false }), 3000);
+        this.props.saveAccount(account);
+        setTimeout(() => {
+            if (this.props.savedAccountObject.account != null) {
+                this.setState({"show": true, "method":"post"});
+                setTimeout(() => this.setState({"show": false}), 3000);
             } else {
-                this.setState({ "show": false });
+                this.setState({"show": false});
             }
-        });
+        }, 2000);
 
         this.setState(this.initialState);
-    };
+    }
 
     updateAccount = event => {
         event.preventDefault();
@@ -205,4 +199,18 @@ export default class Account extends Component {
             </div>
         );
     }
-}
+};
+
+const mapStateToProps = state => {
+    return {
+        savedAccountObject: state.account
+    };
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        saveAccount: (account) => dispatch(saveAccount(account))
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Account);
