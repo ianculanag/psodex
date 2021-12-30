@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import {connect} from 'react-redux';
-import {saveAccount} from '../services/index';
+import {saveAccount, fetchAccount, updateAccount} from '../services/index';
 
 import { Card, Form, Button, Row, Col } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -30,23 +30,20 @@ class Account extends Component {
     };
 
     findAccountById = (accountId) => {
-        fetch("http://localhost:3030/accounts/" + accountId)
-        .then(response => response.json())
-            .then((account) => {
-                if (account) {
-                    this.setState({
-                        accountId: account.accountId,
-                        accountName: account.accountName,
-                        accountNumber: account.accountNumber,
-                        description: account.description,
-                        issuingBank: account.issuingBank,
-                        balance: account.balanceRaw
-                    });
-                }
-
-            }).catch((error) => {
-                console.lerror("Error - " + error);
-            });
+        this.props.fetchAccount(accountId);
+        setTimeout(() => {
+            let account = this.props.accountObject.account;
+            if (account != null) {
+                this.setState({
+                    accountId: account.accountId,
+                    accountName: account.accountName,
+                    accountNumber: account.accountNumber,
+                    description: account.description,
+                    issuingBank: account.issuingBank,
+                    balance: account.balanceRaw
+                });
+            }
+        });
     }
 
     resetAccount = () => {
@@ -88,24 +85,15 @@ class Account extends Component {
             balance: this.state.balance
         }
 
-        const headers = new Headers();
-        headers.append('Content-Type', 'application/json')
-
-        fetch("http://localhost:3030/accounts/" + this.state.accountId, {
-            method: 'PUT',
-            body: JSON.stringify(account),
-            headers
-        })
-        .then(response => response.json())
-        .then((account) => {
-            if (account) {
-                this.setState({ "show": true, "method": "put" });
-                setTimeout(() => this.setState({ "show": false }), 3000);
-                setTimeout(() => this.accountList(), 3000);
+        this.props.updateAccount(this.state.accountId, account);
+        setTimeout(() => {
+            if (this.props.updatedAccountObject.account != null) {
+                this.setState({"show": true, "method":"put"});
+                setTimeout(() => this.setState({"show": false}), 3000);
             } else {
-                this.setState({ "show": false });
+                this.setState({"show": false});
             }
-        });
+        }, 2000);
 
         this.setState(this.initialState);
     };
@@ -203,13 +191,17 @@ class Account extends Component {
 
 const mapStateToProps = state => {
     return {
-        savedAccountObject: state.account
+        savedAccountObject: state.account,
+        accountObject: state.account,
+        updatedAccountObject: state.account
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        saveAccount: (account) => dispatch(saveAccount(account))
+        saveAccount: (account) => dispatch(saveAccount(account)),
+        fetchAccount: (accountId) => dispatch(fetchAccount(accountId)),
+        updateAccount: (accountId, account) => dispatch(updateAccount(accountId, account))
     };
 };
 

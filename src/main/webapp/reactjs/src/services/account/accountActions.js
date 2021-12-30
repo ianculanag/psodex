@@ -1,4 +1,4 @@
-import {SAVE_ACCOUNT_REQUEST, SAVE_ACCOUNT_SUCCESS, SAVE_ACCOUNT_FAILURE} from './accountTypes';
+import {SAVE_ACCOUNT_REQUEST, FETCH_ACCOUNT_REQUEST, UPDATE_ACCOUNT_REQUEST, ACCOUNT_SUCCESS, ACCOUNT_FAILURE} from './accountTypes';
 import axios from 'axios';
 
 export const saveAccount = account => {
@@ -6,10 +6,10 @@ export const saveAccount = account => {
         dispatch(saveAccountRequest());
         axios.post("http://localhost:3030/accounts", account)
             .then(response => {
-                dispatch(saveAccountSuccess(response.data));
+                dispatch(accountSuccess(response.data));
             })
             .catch(error => {
-                dispatch(saveAccountFailure(error.message));
+                dispatch(accountFailure(error.message));
             });
     };
 };
@@ -20,16 +20,54 @@ const saveAccountRequest = () => {
     };
 };
 
-const saveAccountSuccess = accounts => {
+const fetchAccountRequest = () => {
     return {
-        type: SAVE_ACCOUNT_SUCCESS,
+        type: FETCH_ACCOUNT_REQUEST
+    };
+};
+
+export const fetchAccount = accountId => {
+    return dispatch => {
+        dispatch(fetchAccountRequest());
+        axios.get("http://localhost:3030/accounts/" + accountId)
+            .then(response => {
+                dispatch(accountSuccess(response.data));
+            })
+            .catch(error => {
+                dispatch(accountFailure(error.message));
+            });
+    };
+};
+
+const updateAccountRequest = () => {
+    return {
+        type: UPDATE_ACCOUNT_REQUEST
+    };
+};
+
+export const updateAccount = (accountId, account) => {
+    return dispatch => {
+        dispatch(updateAccountRequest());
+        axios.put("http://localhost:3030/accounts/" + accountId, account)
+            .then(response => {
+                dispatch(accountSuccess(response.data));
+            })
+            .catch(error => {
+                dispatch(accountFailure(error.message));
+            });
+    };
+};
+
+const accountSuccess = accounts => {
+    return {
+        type: ACCOUNT_SUCCESS,
         payload: accounts
     };
 };
 
-const saveAccountFailure = error => {
+const accountFailure = error => {
     return {
-        type: SAVE_ACCOUNT_FAILURE,
+        type: ACCOUNT_FAILURE,
         payload: error
     };
 };

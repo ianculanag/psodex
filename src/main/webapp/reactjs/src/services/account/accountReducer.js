@@ -1,4 +1,4 @@
-import {SAVE_ACCOUNT_REQUEST, SAVE_ACCOUNT_SUCCESS, SAVE_ACCOUNT_FAILURE} from './accountTypes';
+import {SAVE_ACCOUNT_REQUEST, FETCH_ACCOUNT_REQUEST, UPDATE_ACCOUNT_REQUEST, ACCOUNT_SUCCESS, ACCOUNT_FAILURE} from './accountTypes';
 
 const initialState = {
     account: '',
@@ -11,12 +11,20 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state
             };
-        case SAVE_ACCOUNT_SUCCESS:
+        case FETCH_ACCOUNT_REQUEST:
+            return {
+                ...state
+            };
+        case UPDATE_ACCOUNT_REQUEST:
+            return {
+                ...state
+            };
+        case ACCOUNT_SUCCESS:
             return {
                 account: action.payload,
                 error: ''
             };
-        case SAVE_ACCOUNT_FAILURE:
+        case ACCOUNT_FAILURE:
             return {
                 account: [],
                 error: action.payload
