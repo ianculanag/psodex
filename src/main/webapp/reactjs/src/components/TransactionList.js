@@ -1,12 +1,11 @@
 import React, {Component} from 'react';
-
-import { Card, Table, InputGroup, FormControl, Button } from 'react-bootstrap';
+import {connect} from 'react-redux';
+import {fetchTransactions} from '../services/transaction/transactionActions';
+import { Card, Table, InputGroup, FormControl, Button, Alert} from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faList, faStepBackward, faFastBackward, faStepForward, faFastForward } from '@fortawesome/free-solid-svg-icons';
 
-import axios from 'axios';
-
-export default class TransactionList extends Component {
+class TransactionList extends Component {
 
     constructor(props) {
         super(props);
@@ -18,16 +17,8 @@ export default class TransactionList extends Component {
     };
 
     componentDidMount() {
-        this.findAllTransactions();
+        this.props.fetchTransactions();
     }
-    
-    findAllTransactions() {
-        axios.get("http://localhost:3030/transactions")
-        .then(response => response.data)
-        .then((data) => {
-            this.setState({transactions: data});
-        });
-    };
 
     changePage = event => {
         this.setState({
@@ -53,15 +44,16 @@ export default class TransactionList extends Component {
     };
 
     lastPage = () => {
-        if (this.state.currentPage < Math.ceil(this.state.transactions.length / this.state.usersPerPage)) {
+        let transactionsLength = this.props.transactionData.transactions.length;
+        if (this.state.currentPage < Math.ceil(transactionsLength / this.state.usersPerPage)) {
             this.setState({
-                currentPage: Math.ceil(this.state.transactions.length / this.state.usersPerPage)
+                currentPage: Math.ceil(transactionsLength / this.state.usersPerPage)
             });
         }
     };
 
     nextPage = () => {
-        if (this.state.currentPage < Math.ceil(this.state.transactions.length / this.state.usersPerPage)) {
+        if (this.state.currentPage < Math.ceil(this.props.transactionData.transactions.length / this.state.usersPerPage)) {
             this.setState({
                 currentPage: this.state.currentPage + 1
             });
@@ -69,9 +61,13 @@ export default class TransactionList extends Component {
     };
 
     render() {
-        const { transactions, currentPage, usersPerPage } = this.state;
+        const {currentPage, usersPerPage } = this.state;
         const lastIndex = currentPage * usersPerPage;
         const firstIndex = lastIndex - usersPerPage;
+
+        const transactionData = this.props.transactionData;
+        const transactions = transactionData.transactions;
+
         const sortedTransactions = transactions.sort((a, b) => Date.parse(a.transactionDate) - Date.parse(b.transactionDate));
         const currentTransactions = sortedTransactions.slice(firstIndex, lastIndex);
         const totalPages = Math.ceil(transactions.length / usersPerPage);
@@ -86,7 +82,11 @@ export default class TransactionList extends Component {
 
         return (
             <div>
-                <Card className={"border border-dark bg-dark text-white"}>
+                {transactionData.error ?
+                    <Alert variant="danger">
+                        {transactionData.error}
+                    </Alert> : 
+                    <Card className={"border border-dark bg-dark text-white"}>
                     <Card.Header><FontAwesomeIcon icon={faList} /> Transaction List</Card.Header>
                     <Card.Body>
                         <Table bordered hover striped variant="dark">
@@ -153,8 +153,22 @@ export default class TransactionList extends Component {
                         </div>
                     </Card.Footer>
                 </Card>
-
+                }
             </div>
         )
     }
 }
+
+const mapStateToProps = state => {
+    return {
+        transactionData: state.transaction
+    }
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        fetchTransactions: () => dispatch(fetchTransactions())
+    }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(TransactionList);

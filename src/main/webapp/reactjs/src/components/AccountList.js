@@ -7,8 +7,6 @@ import { Link } from 'react-router-dom';
 
 import MyToast from './MyToast';
 
-import axios from 'axios';
-
 export default class AccountList extends Component {
 
     constructor(props) {

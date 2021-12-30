@@ -6,8 +6,6 @@ import { faPlusSquare, faSave, faUndo, faList, faEdit } from '@fortawesome/free-
 
 import MyToast from './MyToast';
 
-import axios from 'axios';
-
 export default class Account extends Component {
 
     constructor(props) {

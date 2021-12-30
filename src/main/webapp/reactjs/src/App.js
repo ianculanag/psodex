@@ -1,6 +1,9 @@
 import React from 'react';
 import './App.css';
 
+import {Provider} from 'react-redux';
+import store from './services/store';
+
 import { Container, Row, Col } from 'react-bootstrap';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
@@ -33,7 +36,8 @@ export default function App() {
               <Route path="/edit-account/:id" exact component={Account} />
               <Route path="/account-list" exact component={AccountList} />
               <Route path="/record-transaction" exact component={RecordTransaction} />
-              <Route path="/transaction-list" exact component={TransactionList} />
+              <Route path="/transaction-list" exact component={() => 
+                <Provider store={store}><TransactionList/></Provider>} />
             </Switch>
           </Col>
         </Row>
