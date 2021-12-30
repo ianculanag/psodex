@@ -1,4 +1,4 @@
-import {SAVE_ACCOUNT_REQUEST, FETCH_ACCOUNT_REQUEST, UPDATE_ACCOUNT_REQUEST, ACCOUNT_SUCCESS, ACCOUNT_FAILURE} from './accountTypes';
+import {SAVE_ACCOUNT_REQUEST, FETCH_ACCOUNT_REQUEST, UPDATE_ACCOUNT_REQUEST, DELETE_ACCOUNT_REQUEST, ACCOUNT_SUCCESS, ACCOUNT_FAILURE} from './accountTypes';
 import axios from 'axios';
 
 export const saveAccount = account => {
@@ -49,6 +49,25 @@ export const updateAccount = (accountId, account) => {
     return dispatch => {
         dispatch(updateAccountRequest());
         axios.put("http://localhost:3030/accounts/" + accountId, account)
+            .then(response => {
+                dispatch(accountSuccess(response.data));
+            })
+            .catch(error => {
+                dispatch(accountFailure(error.message));
+            });
+    };
+};
+
+const deleteAccountRequest = () => {
+    return {
+        type: DELETE_ACCOUNT_REQUEST
+    };
+};
+
+export const deleteAccount = accountId => {
+    return dispatch => {
+        dispatch(deleteAccountRequest());
+        axios.delete("http://localhost:3030/accounts/" + accountId)
             .then(response => {
                 dispatch(accountSuccess(response.data));
             })

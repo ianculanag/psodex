@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 
+import {connect} from 'react-redux';
+import {deleteAccount} from '../services/index';
+
 import { Card, Table, ButtonGroup, Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faList, faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
@@ -7,7 +10,7 @@ import { Link } from 'react-router-dom';
 
 import MyToast from './MyToast';
 
-export default class AccountList extends Component {
+class AccountList extends Component {
 
     constructor(props) {
         super(props);
@@ -29,21 +32,16 @@ export default class AccountList extends Component {
     }
 
     deleteAccount = (accountId) => {
-        fetch("http://localhost:3030/accounts/" + accountId, {
-            method: 'DELETE'
-        })
-        .then(response => response.json())
-        .then((account) => {
-            if (account != null) {
+        this.props.deleteAccount(accountId);
+        setTimeout(() => {
+            if (this.props.accountObject != null) {
                 this.setState({ "show": true });
                 setTimeout(() => this.setState({ "show": false }), 3000);
-                this.setState({
-                    accounts: this.state.accounts.filter(account => account.accountId !== accountId)
-                });
+                this.findAllAccounts();
             } else {
                 this.setState({ "show": false });
             }
-        });
+        }, 1000);      
     };
 
     render() {
@@ -98,3 +96,17 @@ export default class AccountList extends Component {
         );
     }
 }
+
+const mapStateToProps = state => {
+    return {
+        accountObject: state.account
+    };
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        deleteAccount: (accountId) => dispatch(deleteAccount(accountId))
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(AccountList);
