@@ -54,6 +54,12 @@
 		   <artifactId>springfox-swagger-ui</artifactId>
 		   <version>2.5.0</version>
 		</dependency>
+		
+		<!-- SPRING SECRURITY -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
 	</dependencies>
 
 	<build>

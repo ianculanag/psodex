@@ -63,7 +63,7 @@ class Account extends Component {
 
         this.props.saveAccount(account);
         setTimeout(() => {
-            if (this.props.savedAccountObject.account != null) {
+            if (this.props.accountObject.account != null) {
                 this.setState({"show": true, "method":"post"});
                 setTimeout(() => this.setState({"show": false}), 3000);
             } else {
@@ -87,7 +87,7 @@ class Account extends Component {
 
         this.props.updateAccount(this.state.accountId, account);
         setTimeout(() => {
-            if (this.props.updatedAccountObject.account != null) {
+            if (this.props.accountObject.account != null) {
                 this.setState({"show": true, "method":"put"});
                 setTimeout(() => this.setState({"show": false}), 3000);
             } else {
@@ -191,9 +191,7 @@ class Account extends Component {
 
 const mapStateToProps = state => {
     return {
-        savedAccountObject: state.account,
-        accountObject: state.account,
-        updatedAccountObject: state.account
+        accountObject: state.account
     };
 };
 

@@ -1,4 +1,4 @@
-import {SAVE_ACCOUNT_REQUEST, FETCH_ACCOUNT_REQUEST, UPDATE_ACCOUNT_REQUEST, DELETE_ACCOUNT_REQUEST, ACCOUNT_SUCCESS, ACCOUNT_FAILURE} from './accountTypes';
+import * as AT from './accountTypes';
 
 const initialState = {
     account: '',
@@ -7,16 +7,19 @@ const initialState = {
 
 const reducer = (state = initialState, action) => {
     switch(action.type) {
-        case SAVE_ACCOUNT_REQUEST || FETCH_ACCOUNT_REQUEST || UPDATE_ACCOUNT_REQUEST || DELETE_ACCOUNT_REQUEST:
+        case AT.SAVE_ACCOUNT_REQUEST:
+        case AT.FETCH_ACCOUNT_REQUEST:
+        case AT.UPDATE_ACCOUNT_REQUEST:
+        case AT.DELETE_ACCOUNT_REQUEST:
             return {
                 ...state
             };
-        case ACCOUNT_SUCCESS:
+        case AT.ACCOUNT_SUCCESS:
             return {
                 account: action.payload,
                 error: ''
             };
-        case ACCOUNT_FAILURE:
+        case AT.ACCOUNT_FAILURE:
             return {
                 account: [],
                 error: action.payload
