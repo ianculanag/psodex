@@ -6,31 +6,43 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.dabi.util.IService;
+
 @Service
-public class JarService {
+public class JarService implements IService<Jar> {
 	
 	@Autowired
 	JarRepository jarRepository;
 
-	public List<Jar> getAllJars() {
+	@Override
+	public List<Jar> findAll() {
 		return jarRepository.findAll();
 	}
 
-	public void addJar(Jar jar) {
-		jarRepository.save(jar);
+	@Override
+	public Jar findById(int id) {
+		return jarRepository.findById(id).get();
 	}
 
-	public void updateJar(Jar jar, int id) {
+	@Override
+	public void save(Jar jar) {
+		jarRepository.save(jar);
+		
+	}
+
+	@Override
+	public void update(Jar jar, int id) {
 		jar.setId(id);
 		jarRepository.save(jar);
 	}
 
-	public void deleteJar(int id) {
+	@Override
+	public void delete(int id) {
 		jarRepository.deleteById(id);
 	}
 
 	public void topUp(BigDecimal amount) {
-		List<Jar> jars = getAllJars();
+		List<Jar> jars = findAll();
 		jars.forEach(jar -> jar.setAvailableBalance(
 				jar.getAvailableBalance().add(amount.multiply(BigDecimal.valueOf(jar.getPercentage() / 100)))));
 		jars.forEach(jar -> jarRepository.save(jar));

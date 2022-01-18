@@ -1,13 +1,8 @@
 package com.dabi.jar;
 
-import java.util.List;
-
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface JarRepository extends CrudRepository<Jar, Integer> {
-
-	@Override
-	List<Jar> findAll();
+public interface JarRepository extends JpaRepository<Jar, Integer> {
 }
