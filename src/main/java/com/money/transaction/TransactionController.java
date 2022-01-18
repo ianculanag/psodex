@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,30 +16,31 @@ import com.money.account.Account;
 import com.money.jar.Jar;
 
 @RestController
-@CrossOrigin(origins="http://localhost:3000")
+@CrossOrigin(origins = "http://localhost:3000")
 public class TransactionController {
-	
+
 	@Autowired
 	TransactionService transactionService;
 
-	@RequestMapping(method=RequestMethod.GET, value="/transactions")
+	@RequestMapping(method = RequestMethod.GET, value = "/transactions")
+	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
 	public List<TransactionResponse> getAllTransactions() {
 		return transactionService.getAllTransactions().stream().map(transaction -> prepareResponse(transaction))
 				.collect(Collectors.toList());
 	}
-	
-	@RequestMapping(method=RequestMethod.POST, value="/transactions")
+
+	@RequestMapping(method = RequestMethod.POST, value = "/transactions")
 	public void addTransaction(@RequestBody TransactionRequest transactionRequest) {
 		Transaction transaction = instantiateModel(transactionRequest);
 		transactionService.addTransaction(transaction);
 	}
 
-	@RequestMapping(method=RequestMethod.PUT, value="/transactions")
+	@RequestMapping(method = RequestMethod.PUT, value = "/transactions")
 	public void updateTransaction(@RequestBody Transaction transaction) {
 		transactionService.updateTransaction(transaction);
 	}
-	
-	@RequestMapping(method=RequestMethod.DELETE, value="/transactions/{id}")
+
+	@RequestMapping(method = RequestMethod.DELETE, value = "/transactions/{id}")
 	public void deleteTransaction(@PathVariable int id) {
 		transactionService.deleteTransaction(id);
 	}

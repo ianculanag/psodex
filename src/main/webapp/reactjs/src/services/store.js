@@ -6,6 +6,7 @@ import authToken from './utils/authToken';
 const store = createStore(rootReducer, applyMiddleware(thunk));
 
 if(localStorage.jwtToken) {
+    console.log('test');
     authToken(localStorage.jwtToken);
 }
 

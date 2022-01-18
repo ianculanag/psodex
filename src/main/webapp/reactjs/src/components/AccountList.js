@@ -9,6 +9,7 @@ import { faList, faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 
 import MyToast from './MyToast';
+import axios from 'axios';
 
 class AccountList extends Component {
 
@@ -24,24 +25,26 @@ class AccountList extends Component {
     }
 
     findAllAccounts() {
-        fetch("http://localhost:3030/accounts")
-            .then(response => response.json())
+        axios.get("http://localhost:3030/accounts")
+            .then(response => response.data)
             .then((data) => {
                 this.setState({ accounts: data });
             });
     }
 
     deleteAccount = (accountId) => {
-        this.props.deleteAccount(accountId);
-        setTimeout(() => {
-            if (this.props.accountObject != null) {
-                this.setState({ "show": true });
-                setTimeout(() => this.setState({ "show": false }), 3000);
-                this.findAllAccounts();
-            } else {
-                this.setState({ "show": false });
-            }
-        }, 1000);      
+        axios.delete("http://localhost:3030/accounts/" + accountId)
+            .then(response => {
+                if (response.data != null) {
+                    this.setState({ "show": true });
+                    setTimeout(() => this.setState({ "show": false }), 3000);
+                    this.setState({
+                        accounts: this.state.accounts.filter(account => account.accountId !== accountId)
+                    });
+                } else {
+                    this.setState({ "show": false });
+                }
+            });
     };
 
     render() {

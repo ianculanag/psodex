@@ -7,6 +7,7 @@ import { Card, Form, Button, Row, Col } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlusSquare, faSave, faUndo, faList, faEdit } from '@fortawesome/free-solid-svg-icons';
 import MyToast from './MyToast';
+import axios from 'axios';
 
 class Account extends Component {
 
@@ -30,20 +31,22 @@ class Account extends Component {
     };
 
     findAccountById = (accountId) => {
-        this.props.fetchAccount(accountId);
-        setTimeout(() => {
-            let account = this.props.accountObject.account;
-            if (account != null) {
-                this.setState({
-                    accountId: account.accountId,
-                    accountName: account.accountName,
-                    accountNumber: account.accountNumber,
-                    description: account.description,
-                    issuingBank: account.issuingBank,
-                    balance: account.balanceRaw
-                });
-            }
-        });
+        axios.get("http://localhost:3030/accounts/" + accountId)
+            .then(response => {
+                if (response.data != null) {
+                    this.setState({
+                        accountId: response.data.accountId,
+                        accountName: response.data.accountName,
+                        accountNumber: response.data.accountNumber,
+                        description: response.data.description,
+                        issuingBank: response.data.issuingBank,
+                        balance: response.data.balanceRaw
+                    });
+                }
+
+            }).catch((error) => {
+                console.lerror("Error - " + error);
+            });
     }
 
     resetAccount = () => {
@@ -61,15 +64,15 @@ class Account extends Component {
             balance: this.state.balance
         }
 
-        this.props.saveAccount(account);
-        setTimeout(() => {
-            if (this.props.accountObject.account != null) {
-                this.setState({"show": true, "method":"post"});
-                setTimeout(() => this.setState({"show": false}), 3000);
-            } else {
-                this.setState({"show": false});
-            }
-        }, 2000);
+        axios.post("http://localhost:3030/accounts", account)
+            .then(response => {
+                if (response.data != null) {
+                    this.setState({ "show": true, "method": "post" });
+                    setTimeout(() => this.setState({ "show": false }), 3000);
+                } else {
+                    this.setState({ "show": false });
+                }
+            });
 
         this.setState(this.initialState);
     }
@@ -85,15 +88,16 @@ class Account extends Component {
             balance: this.state.balance
         }
 
-        this.props.updateAccount(this.state.accountId, account);
-        setTimeout(() => {
-            if (this.props.accountObject.account != null) {
-                this.setState({"show": true, "method":"put"});
-                setTimeout(() => this.setState({"show": false}), 3000);
-            } else {
-                this.setState({"show": false});
-            }
-        }, 2000);
+        axios.put("http://localhost:3030/accounts/" + this.state.accountId, account)
+            .then(response => {
+                if (response.data != null) {
+                    this.setState({ "show": true, "method": "put" });
+                    setTimeout(() => this.setState({ "show": false }), 3000);
+                    setTimeout(() => this.accountList(), 3000);
+                } else {
+                    this.setState({ "show": false });
+                }
+            });
 
         this.setState(this.initialState);
     };
