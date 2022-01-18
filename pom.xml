@@ -8,11 +8,11 @@
 		<version>2.6.1</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.money.jar</groupId>
-	<artifactId>money.jar</artifactId>
+	<groupId>com.dabi</groupId>
+	<artifactId>dabi</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>money.jar</name>
-	<description>Money Jar project</description>
+	<name>dabi</name>
+	<description>Dabi</description>
 	<properties>
 		<java.version>1.8</java.version>
 	</properties>
