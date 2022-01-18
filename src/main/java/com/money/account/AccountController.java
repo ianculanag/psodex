@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,6 +20,7 @@ public class AccountController {
 	AccountService accountService;
 
 	@RequestMapping(method = RequestMethod.GET, value = "/accounts")
+	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
 	public List<AccountResponse> getAllAccounts() {
 		return accountService.getAllAccounts().stream().map(account -> prepareResponse(account))
 				.collect(Collectors.toList());
@@ -30,6 +32,7 @@ public class AccountController {
 	}
 	
 	@RequestMapping(method=RequestMethod.POST, value="/accounts")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public void addAccount(@RequestBody AccountRequest accountRequest) {
 		Account account = instantiateModel(accountRequest);
 		accountService.addAccount(account);
