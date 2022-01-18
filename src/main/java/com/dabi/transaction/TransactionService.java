@@ -9,9 +9,10 @@ import org.springframework.stereotype.Service;
 import com.dabi.account.Account;
 import com.dabi.account.AccountService;
 import com.dabi.jar.JarService;
+import com.dabi.util.IService;
 
 @Service
-public class TransactionService {
+public class TransactionService implements IService<Transaction> {
 	
 	@Autowired
 	TransactionRepository transactionRepository;
@@ -22,11 +23,18 @@ public class TransactionService {
 	@Autowired
 	AccountService accountService;
 
-	public List<Transaction> getAllTransactions() {
+	@Override
+	public List<Transaction> findAll() {
 		return transactionRepository.findAll();
 	}
 
-	public void addTransaction(Transaction transaction) {
+	@Override
+	public Transaction findById(int id) {
+		return transactionRepository.findById(id).get();
+	}
+
+	@Override
+	public void save(Transaction transaction) {
 		TransactionType type = transaction.getType();
 		BigDecimal amount = transaction.getAmount();
 		if (TransactionType.INCOME == type) {
@@ -47,18 +55,20 @@ public class TransactionService {
 		transactionRepository.save(transaction);
 	}
 
+	@Override
+	public void update(Transaction transaction, int id) {
+		transactionRepository.save(transaction);
+	}
+
+	@Override
+	public void delete(int id) {
+		transactionRepository.deleteById(id);
+	}
+	
 	private void transact(Transaction transaction, BigDecimal amount) {
 		Account inboundAccount = transaction.getInboundAccount();
 		Account outboundAccount = transaction.getOutboundAccount();
 		accountService.transact(amount, inboundAccount == null ? 0 : inboundAccount.getId(),
 				outboundAccount == null ? 0 : outboundAccount.getId());
-	}
-
-	public void updateTransaction(Transaction transaction) {
-		transactionRepository.save(transaction);
-	}
-
-	public void deleteTransaction(int id) {
-		transactionRepository.deleteById(id);
 	}
 }

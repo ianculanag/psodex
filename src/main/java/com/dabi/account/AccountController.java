@@ -40,15 +40,15 @@ public class AccountController implements IController<Account, AccountRequest, A
 
 	@Override
 	@PostMapping
-	public void save(@RequestBody AccountRequest request) {
-		Account account = preProcess(request);
+	public void save(@RequestBody AccountRequest accountRequest) {
+		Account account = preProcess(accountRequest);
 		accountService.save(account);
 	}
 
 	@Override
 	@PutMapping("/{id}")
-	public void update(@RequestBody AccountRequest request, int id) {
-		accountService.update(preProcess(request), id);
+	public void update(@RequestBody AccountRequest accountRequest, int id) {
+		accountService.update(preProcess(accountRequest), id);
 	}
 
 	@Override
@@ -58,17 +58,17 @@ public class AccountController implements IController<Account, AccountRequest, A
 	}
 
 	@Override
-	public Account preProcess(AccountRequest request) {
-		return new Account(request.getAccountNumber(), request.getAccountName(), request.getBalance(),
-				request.getDescription(), request.getIssuingBank());
+	public Account preProcess(AccountRequest accountRequest) {
+		return new Account(accountRequest.getAccountNumber(), accountRequest.getAccountName(), accountRequest.getBalance(),
+				accountRequest.getDescription(), accountRequest.getIssuingBank());
 	}
 
 	@Override
-	public AccountResponse postProcess(Account model) {
-		if (model == null)
+	public AccountResponse postProcess(Account account) {
+		if (account == null)
 			return null;
-		AccountResponse accountResponse = new AccountResponse(String.valueOf(model.getId()), model.getAccountNumber(),
-				model.getName(), String.valueOf(model.getBalance()), model.getDescription(), model.getIssuingBank());
+		AccountResponse accountResponse = new AccountResponse(String.valueOf(account.getId()), account.getAccountNumber(),
+				account.getName(), String.valueOf(account.getBalance()), account.getDescription(), account.getIssuingBank());
 		return accountResponse;
 	}
 }

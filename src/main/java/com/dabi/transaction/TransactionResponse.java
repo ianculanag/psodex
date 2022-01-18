@@ -1,31 +1,28 @@
 package com.dabi.transaction;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
-
 public class TransactionResponse {
 
-	private int transactionId;
+	private String transactionId;
 
-	private BigDecimal transactionAmount;
+	private String transactionAmount;
 
-	private LocalDate transactionDate;
+	private String transactionDate;
 
 	private String details;
 
 	private String transactionType;
 
-	private int inboundAccountId;
+	private String inboundAccountId;
 
 	private String inboundAccountName;
 
-	private int outboundAccountId;
+	private String outboundAccountId;
 
 	private String outboundAccountName;
 
-	public TransactionResponse(int transactionId, BigDecimal transactionAmount, LocalDate transactionDate,
-			String details, String transactionType, int inboundAccountId, String inboundAccountName,
-			int outboundAccountId, String outboundAccountName) {
+	public TransactionResponse(String transactionId, String transactionAmount, String transactionDate,
+			String details, String transactionType, String inboundAccountId, String inboundAccountName,
+			String outboundAccountId, String outboundAccountName) {
 		this.transactionId = transactionId;
 		this.transactionAmount = transactionAmount;
 		this.transactionDate = transactionDate;
@@ -37,27 +34,27 @@ public class TransactionResponse {
 		this.outboundAccountName = outboundAccountName;
 	}
 
-	public int getTransactionId() {
+	public String getTransactionId() {
 		return transactionId;
 	}
 
-	public void setTransactionId(int transactionId) {
+	public void setTransactionId(String transactionId) {
 		this.transactionId = transactionId;
 	}
 
-	public BigDecimal getTransactionAmount() {
+	public String getTransactionAmount() {
 		return transactionAmount;
 	}
 
-	public void setTransactionAmount(BigDecimal transactionAmount) {
+	public void setTransactionAmount(String transactionAmount) {
 		this.transactionAmount = transactionAmount;
 	}
 
-	public LocalDate getTransactionDate() {
+	public String getTransactionDate() {
 		return transactionDate;
 	}
 
-	public void setTransactionDate(LocalDate transactionDate) {
+	public void setTransactionDate(String transactionDate) {
 		this.transactionDate = transactionDate;
 	}
 
@@ -77,11 +74,11 @@ public class TransactionResponse {
 		this.transactionType = transactionType;
 	}
 
-	public int getInboundAccountId() {
+	public String getInboundAccountId() {
 		return inboundAccountId;
 	}
 
-	public void setInboundAccountId(int inboundAccountId) {
+	public void setInboundAccountId(String inboundAccountId) {
 		this.inboundAccountId = inboundAccountId;
 	}
 
@@ -93,11 +90,11 @@ public class TransactionResponse {
 		this.inboundAccountName = inboundAccountName;
 	}
 
-	public int getOutboundAccountId() {
+	public String getOutboundAccountId() {
 		return outboundAccountId;
 	}
 
-	public void setOutboundAccountId(int outboundAccountId) {
+	public void setOutboundAccountId(String outboundAccountId) {
 		this.outboundAccountId = outboundAccountId;
 	}
 
