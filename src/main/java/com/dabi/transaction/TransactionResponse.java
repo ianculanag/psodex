@@ -1,8 +1,15 @@
 package com.dabi.transaction;
 
+import java.math.BigDecimal;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 public class TransactionResponse {
 
 	private String transactionId;
+
+	@JsonIgnore
+	private BigDecimal transactionAmountRaw;
 
 	private String transactionAmount;
 
@@ -20,11 +27,11 @@ public class TransactionResponse {
 
 	private String outboundAccountName;
 
-	public TransactionResponse(String transactionId, String transactionAmount, String transactionDate,
+	public TransactionResponse(String transactionId, BigDecimal transactionAmountRaw, String transactionDate,
 			String details, String transactionType, String inboundAccountId, String inboundAccountName,
 			String outboundAccountId, String outboundAccountName) {
 		this.transactionId = transactionId;
-		this.transactionAmount = transactionAmount;
+		this.transactionAmountRaw = transactionAmountRaw;
 		this.transactionDate = transactionDate;
 		this.details = details;
 		this.transactionType = transactionType;
@@ -32,6 +39,7 @@ public class TransactionResponse {
 		this.inboundAccountName = inboundAccountName;
 		this.outboundAccountId = outboundAccountId;
 		this.outboundAccountName = outboundAccountName;
+		doAfterCreation();
 	}
 
 	public String getTransactionId() {
@@ -40,6 +48,14 @@ public class TransactionResponse {
 
 	public void setTransactionId(String transactionId) {
 		this.transactionId = transactionId;
+	}
+
+	public BigDecimal getTransactionAmountRaw() {
+		return transactionAmountRaw;
+	}
+
+	public void setTransactionAmountRaw(BigDecimal transactionAmountRaw) {
+		this.transactionAmountRaw = transactionAmountRaw;
 	}
 
 	public String getTransactionAmount() {
@@ -104,6 +120,11 @@ public class TransactionResponse {
 
 	public void setOutboundAccountName(String outboundAccountName) {
 		this.outboundAccountName = outboundAccountName;
+	}
+
+	private void doAfterCreation() {
+		this.transactionAmount = String.format("%,.2f",
+				this.transactionAmountRaw == null ? 0 : this.transactionAmountRaw.doubleValue());
 	}
 
 }

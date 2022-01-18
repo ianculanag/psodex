@@ -77,7 +77,7 @@ public class TransactionController implements IController<Transaction, Transacti
 		if (transaction == null)
 			return null;
 		TransactionResponse transactionResponse = new TransactionResponse(String.valueOf(transaction.getId()),
-				String.valueOf(transaction.getAmount()), transaction.getDate().toString(), transaction.getDetails(),
+				transaction.getAmount(), transaction.getDate().toString(), transaction.getDetails(),
 				transaction.getType().name(),
 				transaction.getInboundAccount() == null ? "" : String.valueOf(transaction.getInboundAccount().getId()),
 				transaction.getInboundAccount() == null ? "" : transaction.getInboundAccount().getName(),
