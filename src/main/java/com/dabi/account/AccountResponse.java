@@ -1,5 +1,9 @@
 package com.dabi.account;
 
+import java.math.BigDecimal;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 public class AccountResponse {
 
 	private String accountId;
@@ -8,7 +12,8 @@ public class AccountResponse {
 
 	private String accountName;
 
-	private String balanceRaw;
+	@JsonIgnore
+	private BigDecimal balanceRaw;
 
 	private String balance;
 
@@ -16,7 +21,7 @@ public class AccountResponse {
 
 	private String issuingBank;
 
-	public AccountResponse(String accountId, String accountNumber, String accountName, String balanceRaw,
+	public AccountResponse(String accountId, String accountNumber, String accountName, BigDecimal balanceRaw,
 			String description, String issuingBank) {
 		super();
 		this.accountId = accountId;
@@ -52,11 +57,11 @@ public class AccountResponse {
 		this.accountName = accountName;
 	}
 
-	public String getBalanceRaw() {
+	public BigDecimal getBalanceRaw() {
 		return balanceRaw;
 	}
 
-	public void setBalanceRaw(String balanceRaw) {
+	public void setBalanceRaw(BigDecimal balanceRaw) {
 		this.balanceRaw = balanceRaw;
 	}
 
@@ -85,7 +90,7 @@ public class AccountResponse {
 	}
 
 	private void doAfterCreation() {
-		this.balance = String.format("%,.2f", this.balanceRaw == null ? 0 : Double.valueOf(this.balanceRaw));
+		this.balance = String.format("%,.2f", this.balanceRaw == null ? 0 : this.balanceRaw.doubleValue());
 	}
 
 }

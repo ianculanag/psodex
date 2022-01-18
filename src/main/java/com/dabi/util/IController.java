@@ -11,11 +11,11 @@ public interface IController<T, REQ, RES> {
 	
 	public List<RES> findAll();
 	
-	public RES findById(int id);
+	public RES findById(@PathVariable int id);
 
 	public void save(@RequestBody REQ request);
 
-	public void update(@RequestBody REQ request, int id);
+	public void update(@RequestBody REQ request, @PathVariable int id);
 
 	public void delete(@PathVariable int id);
 

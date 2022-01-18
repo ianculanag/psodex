@@ -34,7 +34,7 @@ public class AccountController implements IController<Account, AccountRequest, A
 
 	@Override
 	@GetMapping("/{id}")
-	public AccountResponse findById(int id) {
+	public AccountResponse findById(@PathVariable int id) {
 		return postProcess(accountService.findById(id));
 	}
 
@@ -47,7 +47,7 @@ public class AccountController implements IController<Account, AccountRequest, A
 
 	@Override
 	@PutMapping("/{id}")
-	public void update(@RequestBody AccountRequest accountRequest, int id) {
+	public void update(@RequestBody AccountRequest accountRequest, @PathVariable int id) {
 		accountService.update(preProcess(accountRequest), id);
 	}
 
@@ -59,16 +59,17 @@ public class AccountController implements IController<Account, AccountRequest, A
 
 	@Override
 	public Account preProcess(AccountRequest accountRequest) {
-		return new Account(accountRequest.getAccountNumber(), accountRequest.getAccountName(), accountRequest.getBalance(),
-				accountRequest.getDescription(), accountRequest.getIssuingBank());
+		return new Account(accountRequest.getAccountNumber(), accountRequest.getAccountName(),
+				accountRequest.getBalance(), accountRequest.getDescription(), accountRequest.getIssuingBank());
 	}
 
 	@Override
 	public AccountResponse postProcess(Account account) {
 		if (account == null)
 			return null;
-		AccountResponse accountResponse = new AccountResponse(String.valueOf(account.getId()), account.getAccountNumber(),
-				account.getName(), String.valueOf(account.getBalance()), account.getDescription(), account.getIssuingBank());
+		AccountResponse accountResponse = new AccountResponse(String.valueOf(account.getId()),
+				account.getAccountNumber(), account.getName(), account.getBalance(), account.getDescription(),
+				account.getIssuingBank());
 		return accountResponse;
 	}
 }

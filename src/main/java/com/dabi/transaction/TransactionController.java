@@ -8,6 +8,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -36,7 +37,7 @@ public class TransactionController implements IController<Transaction, Transacti
 
 	@Override
 	@GetMapping("/{id}")
-	public TransactionResponse findById(int id) {
+	public TransactionResponse findById(@PathVariable int id) {
 		return postProcess(transactionService.findById(id));
 	}
 
@@ -49,13 +50,13 @@ public class TransactionController implements IController<Transaction, Transacti
 
 	@Override
 	@PutMapping("/{id}")
-	public void update(TransactionRequest transactionRequest, int id) {
+	public void update(@RequestBody TransactionRequest transactionRequest, @PathVariable int id) {
 		transactionService.update(preProcess(transactionRequest), id);
 	}
 
 	@Override
 	@DeleteMapping("/{id}")
-	public void delete(int id) {
+	public void delete(@PathVariable int id) {
 		transactionService.delete(id);
 	}
 
