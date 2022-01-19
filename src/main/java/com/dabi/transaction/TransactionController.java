@@ -69,7 +69,7 @@ public class TransactionController implements IController<Transaction, Transacti
 		Jar jar = transactionRequest.getJarId() == 0 ? null : new Jar(transactionRequest.getJarId());
 		return new Transaction(TransactionType.valueOf(transactionRequest.getTransactionType()),
 				transactionRequest.getTransactionDetails(), transactionRequest.getTransactionAmount(),
-				transactionRequest.getTransactionDate(), inboundAccount, outboundAccount, jar);
+				transactionRequest.getTransactionDate(), inboundAccount, outboundAccount, jar, null);
 	}
 
 	@Override

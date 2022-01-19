@@ -60,7 +60,7 @@ public class JarController implements IController<Jar, JarRequest, JarResponse> 
 	@Override
 	public Jar preProcess(JarRequest jarRequest) {
 		return new Jar(jarRequest.getJarName(), jarRequest.getDescription(), jarRequest.getPercentage(),
-				jarRequest.getAvailableBalance(), jarRequest.getDateCreated());
+				jarRequest.getAvailableBalance(), jarRequest.getDateCreated(), null);
 	}
 
 	@Override

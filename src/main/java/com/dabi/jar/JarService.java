@@ -6,6 +6,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.dabi.account.Account;
+import com.dabi.user.UserService;
 import com.dabi.util.IService;
 
 @Service
@@ -14,24 +16,29 @@ public class JarService implements IService<Jar> {
 	@Autowired
 	JarRepository jarRepository;
 
+	@Autowired
+	UserService userService;
+
 	@Override
 	public List<Jar> findAll() {
-		return jarRepository.findAll();
+		return jarRepository.findAllByUserId(userService.getLoggedInUserId());
 	}
 
 	@Override
 	public Jar findById(int id) {
-		return jarRepository.findById(id).get();
+		return jarRepository.findByIdAndUserId(id, userService.getLoggedInUserId()).get();
 	}
 
 	@Override
 	public void save(Jar jar) {
+		setUser(jar);
 		jarRepository.save(jar);
 		
 	}
 
 	@Override
 	public void update(Jar jar, int id) {
+		setUser(jar);
 		jar.setId(id);
 		jarRepository.save(jar);
 	}
@@ -54,5 +61,9 @@ public class JarService implements IService<Jar> {
 			jar.setAvailableBalance(jar.getAvailableBalance().subtract(amount));
 		}
 		jarRepository.save(jar);
+	}
+
+	public void setUser(Jar jar) {
+		jar.setUser(userService.getLoggedInUser());
 	}
 }

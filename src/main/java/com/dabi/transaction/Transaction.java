@@ -12,6 +12,7 @@ import javax.persistence.Table;
 
 import com.dabi.account.Account;
 import com.dabi.jar.Jar;
+import com.dabi.user.User;
 
 @Entity
 @Table(name = "transaction")
@@ -29,24 +30,28 @@ public class Transaction {
 
 	private LocalDate date;
 
-	@ManyToOne
+	@ManyToOne(targetEntity = Account.class)
 	@JoinColumn(name = "inboundAccountId")
 	private Account inboundAccount;
 
-	@ManyToOne
+	@ManyToOne(targetEntity = Account.class)
 	@JoinColumn(name = "outboundAccountId")
 	private Account outboundAccount;
 	
-	@ManyToOne
+	@ManyToOne(targetEntity = Jar.class)
 	@JoinColumn(name = "jarId")
 	private Jar jar;
+	
+	@ManyToOne(targetEntity = User.class)
+	@JoinColumn(name = "userId")
+	private User user;
 	
 	public Transaction() {
 		
 	}
 
 	public Transaction(TransactionType type, String details, BigDecimal amount, LocalDate date,
-			Account inboundAccount, Account outboundAccount, Jar jar) {
+			Account inboundAccount, Account outboundAccount, Jar jar, User user) {
 		this.type = type;
 		this.details = details;
 		this.amount = amount;
@@ -54,6 +59,7 @@ public class Transaction {
 		this.inboundAccount = inboundAccount;
 		this.outboundAccount = outboundAccount;
 		this.jar = jar;
+		this.user = user;
 	}
 
 	public int getId() {
@@ -118,6 +124,14 @@ public class Transaction {
 
 	public void setJar(Jar jar) {
 		this.jar = jar;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 }

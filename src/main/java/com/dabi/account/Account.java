@@ -6,7 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.dabi.user.User;
@@ -29,7 +29,7 @@ public class Account {
 
 	private String issuingBank;
 	
-	@OneToOne(targetEntity = User.class)
+	@ManyToOne(targetEntity = User.class)
 	@JoinColumn(name = "userId")
 	private User user;
 

@@ -6,7 +6,11 @@ import java.time.LocalDate;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import com.dabi.user.User;
 
 @Entity
 @Table(name = "jar")
@@ -25,6 +29,10 @@ public class Jar {
 	private BigDecimal availableBalance;
 
 	private LocalDate dateCreated;
+	
+	@ManyToOne(targetEntity = User.class)
+	@JoinColumn(name = "userId")
+	private User user;
 
 	public Jar() {
 
@@ -35,12 +43,13 @@ public class Jar {
 	}
 
 	public Jar(String name, String description, double percentage, BigDecimal availableBalance,
-			LocalDate dateCreated) {
+			LocalDate dateCreated, User user) {
 		this.name = name;
 		this.description = description;
 		this.percentage = percentage;
 		this.availableBalance = availableBalance;
 		this.dateCreated = dateCreated;
+		this.user = user;
 	}
 
 	public int getId() {
@@ -89,6 +98,14 @@ public class Jar {
 
 	public void setDateCreated(LocalDate dateCreated) {
 		this.dateCreated = dateCreated;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 }
