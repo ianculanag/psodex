@@ -60,7 +60,7 @@ public class AccountController implements IController<Account, AccountRequest, A
 	@Override
 	public Account preProcess(AccountRequest accountRequest) {
 		return new Account(accountRequest.getAccountNumber(), accountRequest.getAccountName(),
-				accountRequest.getBalance(), accountRequest.getDescription(), accountRequest.getIssuingBank());
+				accountRequest.getBalance(), accountRequest.getDescription(), accountRequest.getIssuingBank(), null);
 	}
 
 	@Override

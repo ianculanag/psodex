@@ -1,4 +1,4 @@
-package com.dabi.config;
+package com.dabi.security;
 
 import java.io.Serializable;
 import java.util.Base64;

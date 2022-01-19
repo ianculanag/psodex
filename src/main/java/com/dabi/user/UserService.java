@@ -4,6 +4,9 @@ import java.util.Collection;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -28,5 +31,18 @@ public class UserService {
 	
 	public void deleteById(Integer id) {
 		userRepository.deleteById(id);
+	}
+	
+	public User getLoggedInUser() {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		return findByEmail(authentication.getName());
+	}
+	
+	public int getLoggedInUserId() {
+		return getLoggedInUser().getId();
+	}
+	
+	public User findByEmail(String email) {
+		return userRepository.findByEmail(email);
 	}
 }

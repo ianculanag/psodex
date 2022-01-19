@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.dabi.user.UserService;
 import com.dabi.util.IService;
 
 @Service
@@ -14,23 +15,28 @@ public class AccountService implements IService<Account> {
 	@Autowired
 	AccountRepository accountRepository;
 
+	@Autowired
+	UserService userService;
+
 	@Override
 	public List<Account> findAll() {
-		return accountRepository.findAll();
+		return accountRepository.findAllByUserId(userService.getLoggedInUserId());
 	}
 
 	@Override
 	public Account findById(int id) {
-		return accountRepository.findById(id).get();
+		return accountRepository.findByIdAndUserId(id, userService.getLoggedInUserId()).get();
 	}
 
 	@Override
 	public void save(Account account) {
+		setUser(account);
 		accountRepository.save(account);
 	}
 
 	@Override
 	public void update(Account account, int id) {
+		setUser(account);
 		account.setId(id);
 		accountRepository.save(account);
 	}
@@ -71,5 +77,9 @@ public class AccountService implements IService<Account> {
 				accountRepository.save(outboundAccount);
 			}
 		}
+	}
+
+	public void setUser(Account account) {
+		account.setUser(userService.getLoggedInUser());
 	}
 }

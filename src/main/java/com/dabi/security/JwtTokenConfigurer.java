@@ -1,4 +1,4 @@
-package com.dabi.config;
+package com.dabi.security;
 
 import org.springframework.security.config.annotation.SecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;

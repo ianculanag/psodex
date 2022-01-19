@@ -5,7 +5,11 @@ import java.math.BigDecimal;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import com.dabi.user.User;
 
 @Entity
 @Table(name = "account")
@@ -24,6 +28,10 @@ public class Account {
 	private String description;
 
 	private String issuingBank;
+	
+	@OneToOne(targetEntity = User.class)
+	@JoinColumn(name = "userId")
+	private User user;
 
 	public Account() {
 
@@ -33,12 +41,13 @@ public class Account {
 		this.id = id;
 	}
 
-	public Account(String accountNumber, String name, BigDecimal balance, String description, String issuingBank) {
+	public Account(String accountNumber, String name, BigDecimal balance, String description, String issuingBank, User user) {
 		this.accountNumber = accountNumber;
 		this.name = name;
 		this.balance = balance;
 		this.description = description;
 		this.issuingBank = issuingBank;
+		this.user = user;
 	}
 
 	public int getId() {
@@ -87,6 +96,14 @@ public class Account {
 
 	public void setIssuingBank(String issuingBank) {
 		this.issuingBank = issuingBank;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 }

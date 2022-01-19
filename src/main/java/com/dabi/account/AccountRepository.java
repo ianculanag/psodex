@@ -1,9 +1,18 @@
 package com.dabi.account;
 
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import com.dabi.user.User;
+
 @Repository
 public interface AccountRepository extends JpaRepository<Account, Integer> {
+
+	List<Account> findAllByUserId(int id);
+
+	Optional<Account> findByIdAndUserId(int id, int loggedInUserId);
 
 }
