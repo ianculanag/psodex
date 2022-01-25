@@ -8,11 +8,11 @@
 		<version>2.6.1</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.dabi</groupId>
-	<artifactId>dabi</artifactId>
+	<groupId>com.psodex</groupId>
+	<artifactId>psodex</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>dabi</name>
-	<description>Dabi</description>
+	<name>pesodex</name>
+	<description>expense tracker web app</description>
 	<properties>
 		<java.version>1.8</java.version>
 	</properties>
@@ -65,7 +65,7 @@
 		<dependency>
 			<groupId>org.json</groupId>
 			<artifactId>json</artifactId>
-			<version>20090211</version>
+			<version>20210307</version>
 		</dependency>
 		
 		<!-- JWT -->
@@ -73,6 +73,25 @@
 			<groupId>io.jsonwebtoken</groupId>
 			<artifactId>jjwt</artifactId>
 			<version>0.9.1</version>
+		</dependency>
+		
+		<!-- JSP -->
+		<dependency>
+			<groupId>org.apache.tomcat.embed</groupId>
+			<artifactId>tomcat-embed-jasper</artifactId>
+		</dependency>
+		
+		<dependency>
+		    <groupId>javax.servlet</groupId>
+		    <artifactId>javax.servlet-api</artifactId>
+		    <version>4.0.1</version>
+		    <scope>provided</scope>
+		</dependency>
+
+		<dependency>
+		    <groupId>javax.servlet</groupId>
+		    <artifactId>jstl</artifactId>
+		    <version>1.2</version>
 		</dependency>
 	</dependencies>
 
