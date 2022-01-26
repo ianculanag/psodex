@@ -37,21 +37,32 @@ body, html {
 	<div style="width: 100vw;">
 		<jsp:include page="sidebarMenu.jsp" />
 		<div class="workspace" style="padding-left: 250px">
-			<div class="float-start ms-5" style="margin-left: 0 !important;">
-				<div class="d-flex flex-row flex-wrap">
-					<c:forEach var="account" items="${accounts}">
-						<div class="card text-end mt-5 ms-5" style="width: 18rem;">
-							<div class="card-body">
-								<h5 class="card-title" style="display: inline-block">PHP</h5>
-								<h2 class="card-title" style="display: inline-block">${ account.balance }</h2>
-								<h5 class="card-subtitle mb-2 text-muted">${ account.accountName }</h5>
-								<h6 class="card-subtitle mb-2 text-muted">${ account.accountNumber }</h6>
-								<h6 class="card-subtitle mb-2 text-muted">${ account.issuingBank }</h6>
+			<div class="row w-100">
+				<div class="accountsContainer">
+					<div class="p-0 ms-5 me-5 mt-5">
+						<h6 class="text-muted">Accounts</h6>
+						<div class="float-start ms-5" style="margin-left: 0 !important; width: 100%">
+							<div class="d-flex flex-row flex-wrap">
+								<c:set var="accountInstance" value="${accounts}" scope="request" />
+								<jsp:include page="accountCard.jsp" />
 							</div>
 						</div>
-					</c:forEach>
+					</div>
 				</div>
 			</div>
+
+			<div class="row w-100">
+				<div class="transactionsContainer">
+					<div class="p-0 ms-5 me-5 mb-5">
+						<h6 class="text-muted">Transaction History</h6>
+						<div class="list-group">
+							<c:set var="transactionInstance" value="${transactions}" scope="request" />
+							<jsp:include page="transactionEntry.jsp" />
+						</div>
+					</div>
+				</div>
+			</div>
+
 		</div>
 	</div>
 </body>

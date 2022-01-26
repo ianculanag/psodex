@@ -16,7 +16,7 @@ public class ResourceController {
 	@RequestMapping(value = "/logo", method = RequestMethod.GET, produces = MediaType.IMAGE_JPEG_VALUE)
 	public ResponseEntity<byte[]> getImage() throws IOException {
 
-		ClassPathResource imgFile = new ClassPathResource("static/logo-sm-dark.jpg");
+		ClassPathResource imgFile = new ClassPathResource("static/logo-sm-dark.png");
 		byte[] bytes = StreamUtils.copyToByteArray(imgFile.getInputStream());
 
 		return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(bytes);

@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import com.psodex.rest.account.Account;
@@ -56,6 +57,7 @@ public class TransactionService implements IService<Transaction> {
 			}
 			transact(transaction, amount);
 		}
+		setUser(transaction);
 		transactionRepository.save(transaction);
 	}
 
@@ -78,5 +80,9 @@ public class TransactionService implements IService<Transaction> {
 
 	public void setUser(Transaction transaction) {
 		transaction.setUser(userService.getLoggedInUser());
+	}
+
+	public List<Transaction> findAll(Authentication authentication) {
+		return transactionRepository.findAllByUserId(userService.getLoggedInUser(authentication).getId());
 	}
 }
