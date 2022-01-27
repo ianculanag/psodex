@@ -20,29 +20,29 @@
 	<div class="form-container">
 		<div class="p-5 ms-5 me-5 mt-5 bg-light">
 			<h5 class="text-muted mb-4">Add Transaction</h5>
-			<form class="row g-3">
+			<form action="post-transaction" method="post" class="row g-3">
 				<div class="col-md-9">
-					<label for="inputEmail4" class="form-label">Description</label>
-					<input type="email" class="form-control" id="inputEmail4" placeholder="What is this transaction about?">
+					<label for="transactionDescription" class="form-label">Description</label>
+					<input type="text" class="form-control" name="transactionDescription" placeholder="What is this transaction about?">
 				</div>
 				<div class="col-md-3">
-					<label for="inputCity" class="form-label">Date</label>
-					<input type="date" class="form-control" id="inputCity">
+					<label for="transactionDate" class="form-label">Date</label>
+					<input type="date" class="form-control" name="transactionDate">
 				</div>
 				<div class="col-md-6">
-					<label for="inputPassword4" class="form-label">Amount</label>
+					<label for="transactionAmount" class="form-label">Amount</label>
 					<div class="row">
 						<div class="col-md-3">
 							<input type="text" class="form-control" id="currency" placeholder="PHP" style="text-align: center" readonly />
 						</div>
 						<div class="col-md-9">
-							<input type="number" class="form-control transaction-amount" id="inputPassword4" placeholder="0.00" style="text-align: right">
+							<input type="number" class="form-control transaction-amount" name="transactionAmount" placeholder="0.00" style="text-align: right">
 						</div>
 					</div>
 				</div>
 				<div class="col-md-3">
-					<label for="inputState" class="form-label">Type</label>
-					<select id="select-transaction-type" class="form-select">
+					<label for="transactionType" class="form-label">Type</label>
+					<select id="select-transaction-type" class="form-select" name="transactionType">
 						<option>Expense</option>
 						<option>Income</option>
 						<option>Transfer</option>
@@ -51,8 +51,8 @@
 					</select>
 				</div>
 				<div class="col-md-3">
-					<label for="inputState" class="form-label">Jar</label>
-					<select id="inputState" class="form-select">
+					<label for="transactionJar" class="form-label">Jar</label>
+					<select id="inputState" class="form-select" name="transactionJar">
 						<option class="text-muted">Select the Jar...</option>
 						<option>Necessities</option>
 						<option>Relationship</option>
@@ -65,7 +65,8 @@
 
 				<div id="bound-accounts" class="row g-3">
 					<div id="outbound-account-select" class="col-md-6">
-						<label for="inputPassword4" class="form-label w-100">Outbound Account:</label>
+						<label for="outboundAccountId" class="form-label w-100">Outbound Account:</label>
+						<input type="hidden" name="outboundAccountId" id="outboundAccountId" class="accountId">
 						<div class="btn-group w-100" style="height: 75px">
 							<div class="dropdown-toggle form-control w-100 text-start h-100 p-0" id="defaultDropdown" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false">
 
@@ -90,6 +91,7 @@
 								<li><h6 class="dropdown-header">Select account</h6></li>
 								<li>
 									<div class="dropdown-item">
+										<input type="hidden" class="account-id" value="96">
 										<div>
 											<div class="row py-1">
 												<div class="col-md-4">
@@ -106,6 +108,7 @@
 								</li>
 								<li>
 									<div class="dropdown-item">
+										<input type="hidden" class="account-id" value="97">
 										<div>
 											<div class="row py-1">
 												<div class="col-md-4">
@@ -122,6 +125,7 @@
 								</li>
 								<li>
 									<div class="dropdown-item">
+										<input type="hidden" class="account-id" value="98">
 										<div>
 											<div class="row py-1">
 												<div class="col-md-4">
@@ -140,7 +144,8 @@
 						</div>
 					</div>
 					<div id="inbound-account-select" class="col-md-6 collapse">
-						<label for="inputPassword4" class="form-label w-100">Inbound Account:</label>
+						<label for="inboundAccountId" class="form-label w-100">Inbound Account:</label>
+						<input type="hidden" name="inboundAccountId" id="inboundAccountId" class="accountId">
 						<div class="btn-group w-100" style="height: 75px">
 							<div class="dropdown-toggle form-control w-100 text-start h-100 p-0" id="defaultDropdown" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false">
 
@@ -165,6 +170,24 @@
 								<li><h6 class="dropdown-header">Select account</h6></li>
 								<li>
 									<div class="dropdown-item">
+										<input type="hidden" class="account-id" value="96">
+										<div>
+											<div class="row py-1">
+												<div class="col-md-4">
+													<h6 class="mb-0 account-select-account-name">Infor Payroll</h6>
+													<small class="account-select-account-number">1929570622</small>
+												</div>
+												<div class="col-md-8 text-end">
+													<small style="display: inline-block" class="fw-light me-1">PHP</small>
+													<h5 class="mb-0 account-select-balance" style="display: inline-block">94,266.73</h5>
+												</div>
+											</div>
+										</div>
+									</div>
+								</li>
+								<li>
+									<div class="dropdown-item">
+										<input type="hidden" class="account-id" value="97">
 										<div>
 											<div class="row py-1">
 												<div class="col-md-4">
@@ -181,6 +204,7 @@
 								</li>
 								<li>
 									<div class="dropdown-item">
+										<input type="hidden" class="account-id" value="98">
 										<div>
 											<div class="row py-1">
 												<div class="col-md-4">
@@ -199,12 +223,6 @@
 						</div>
 					</div>
 				</div>
-				<!--div class="col-12">
-					<div class="form-check">
-						<input class="form-check-input" type="checkbox" id="gridCheck">
-						<label class="form-check-label" for="gridCheck"> Check me out </label>
-					</div>
-				</div-->
 				<div class="col-12">
 					<button type="submit" class="btn btn-primary">Submit</button>
 				</div>
@@ -214,65 +232,54 @@
 </div>
 
 <script>
-	$('.transaction-amount').keypress(
-			function(e) {
-				if ($(this).val().indexOf(".") > -1
-						&& ($(this).val().split('.')[1].length > 1)) {
-					e.preventDefault();
-				}
-			});
+	$('.transaction-amount').keypress(function(e) {
+		if ($(this).val().indexOf(".") > -1 && ($(this).val().split('.')[1].length > 1)) {
+			e.preventDefault();
+		}
+	});
 
-	$('#select-transaction-type').change(
-			function() {
-				$('#outbound-account-select').find('.account-card-input-empty')
-						.removeClass('collapse');
-				$('#outbound-account-select').find(
-						'.account-card-input-selected').addClass('collapse');
+	$('#select-transaction-type').change(function() {
+		$('#outbound-account-select').find('.account-card-input-empty').removeClass('collapse');
+		$('#outbound-account-select').find('.account-card-input-selected').addClass('collapse');
 
-				$('#inbound-account-select').find('.account-card-input-empty')
-						.removeClass('collapse');
-				$('#inbound-account-select').find(
-						'.account-card-input-selected').addClass('collapse');
+		$('#inbound-account-select').find('.account-card-input-empty').removeClass('collapse');
+		$('#inbound-account-select').find('.account-card-input-selected').addClass('collapse');
 
-				var transactionType = $(this).val();
-				if (transactionType == 'Transfer') {
-					$('#inbound-account-select').removeClass('collapse');
-					$('#outbound-account-select').removeClass('collapse');
-					return;
-				}
-				if (transactionType == 'Income') {
-					$('#inbound-account-select').removeClass('collapse');
-					$('#outbound-account-select').addClass('collapse');
-					return;
-				}
-				$('#inbound-account-select').addClass('collapse');
-				$('#outbound-account-select').removeClass('collapse');
-			});
+		$('#inboundAccountId').val('');
+		$('#outboundAccountId').val('');
 
-	$('.dropdown-item').click(
-			function() {
-				var accountName = $(this).find('.account-select-account-name')
-						.html();
-				var accountNumber = $(this).find(
-						'.account-select-account-number').html();
-				var balance = $(this).find('.account-select-balance').html();
+		var transactionType = $(this).val();
+		if (transactionType == 'Transfer') {
+			$('#inbound-account-select').removeClass('collapse');
+			$('#outbound-account-select').removeClass('collapse');
+			return;
+		}
+		if (transactionType == 'Income') {
+			$('#inbound-account-select').removeClass('collapse');
+			$('#outbound-account-select').addClass('collapse');
+			return;
+		}
+		$('#inbound-account-select').addClass('collapse');
+		$('#outbound-account-select').removeClass('collapse');
+	});
 
-				var accountInput = $(this).parent().parent().parent().find(
-						".dropdown-toggle");
+	$('.dropdown-item').click(function() {
+		var accountName = $(this).find('.account-select-account-name').html();
+		var accountNumber = $(this).find('.account-select-account-number').html();
+		var balance = $(this).find('.account-select-balance').html();
+		var accountId = $(this).find('.account-id').val();
 
-				accountInput.addClass('account-selected');
-				accountInput.find('.account-card-input-empty').addClass(
-						'collapse');
+		var accountInput = $(this).parent().parent().parent().find(".dropdown-toggle");
 
-				var accountInputSelected = accountInput
-						.find('.account-card-input-selected');
-				accountInputSelected.removeClass('collapse');
-				accountInputSelected.find('.account-card-input-account-name')
-						.html(accountName);
-				accountInputSelected.find('.account-card-input-account-number')
-						.html(accountNumber);
-				accountInputSelected.find('.account-card-input-balance').html(
-						balance);
-			})
+		accountInput.addClass('account-selected');
+		accountInput.find('.account-card-input-empty').addClass('collapse');
+
+		var accountInputSelected = accountInput.find('.account-card-input-selected');
+		accountInputSelected.removeClass('collapse');
+		accountInputSelected.find('.account-card-input-account-name').html(accountName);
+		accountInputSelected.find('.account-card-input-account-number').html(accountNumber);
+		accountInputSelected.find('.account-card-input-balance').html(balance);
+		accountInput.parent().parent().find('.accountId').val(accountId);
+	});
 </script>
 <jsp:include page="footer.jsp" />

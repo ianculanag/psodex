@@ -1,10 +1,11 @@
 package com.psodex.rest.transaction;
 
 import java.math.BigDecimal;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import com.psodex.rest.account.Account;
@@ -30,7 +31,8 @@ public class TransactionService implements IService<Transaction> {
 
 	@Override
 	public List<Transaction> findAll() {
-		return transactionRepository.findAllByUserId(userService.getLoggedInUserId());
+		return transactionRepository.findAllByUserId(userService.getLoggedInUserId()).stream()
+				.sorted(Comparator.comparing(Transaction::getDate).reversed()).collect(Collectors.toList());
 	}
 
 	@Override
@@ -83,6 +85,33 @@ public class TransactionService implements IService<Transaction> {
 	}
 
 	public List<Transaction> findAll(boolean isFromView) {
-		return transactionRepository.findAllByUserId(userService.getLoggedInUser(isFromView).getId());
+		return transactionRepository.findAllByUserId(userService.getLoggedInUser(isFromView).getId()).stream()
+				.sorted(Comparator.comparing(Transaction::getDate).reversed()).collect(Collectors.toList());
+	}
+
+	public void save(Transaction transaction, boolean isFromView) {
+		TransactionType type = transaction.getType();
+		BigDecimal amount = transaction.getAmount();
+		if (TransactionType.INCOME == type) {
+			jarService.topUp(amount);
+			Account inboundAccount = transaction.getInboundAccount();
+			accountService.transact(amount, inboundAccount == null ? null : inboundAccount.getId());
+		}
+		if (TransactionType.TRANSFER == type) {
+			transact(transaction, amount);
+		}
+
+		if (TransactionType.EXPENSE == type || TransactionType.INVESTMENT == type || TransactionType.SAVINGS == type) {
+			if (transaction.getJar() != null) {
+				jarService.withdrawBalance(amount, transaction.getJar().getId());
+			}
+			transact(transaction, amount);
+		}
+		setUser(transaction, true);
+		transactionRepository.save(transaction);
+	}
+
+	public void setUser(Transaction transaction, boolean isFromView) {
+		transaction.setUser(userService.getLoggedInUser(isFromView));
 	}
 }

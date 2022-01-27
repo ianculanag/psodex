@@ -56,6 +56,8 @@ public class DashboardWebController {
 		request.setAttribute("accounts", processAccountResponse(accountService.findAll(true)));
 		request.setAttribute("transactions", processTransactionResponse(transactionService.findAll(true)));
 		request.setAttribute("activeSideBar", "dashboard");
+		
+		// TODO: Transaction List inbound outbound display
 		return "dashboard";
 	}
 
