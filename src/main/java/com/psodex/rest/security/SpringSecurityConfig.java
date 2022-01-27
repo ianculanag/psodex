@@ -34,7 +34,9 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.csrf().disable().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-				.authorizeRequests().antMatchers("/user/authenticate", "/", "/logo", "/login").permitAll().anyRequest()
+				.authorizeRequests().antMatchers("/user/authenticate", 
+						"/", "/logo", "/welcome", "/dashboard",
+						"/add-transaction").permitAll().anyRequest()
 				.authenticated();
 		http.apply(new JwtTokenConfigurer(tokenProvider));
 	}

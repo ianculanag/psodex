@@ -1,14 +1,15 @@
-package com.psodex.login;
+package com.psodex.dashboard;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -24,7 +25,7 @@ import com.psodex.rest.user.UserBuilder;
 import com.psodex.rest.user.UserService;
 
 @Controller
-public class LoginController {
+public class DashboardWebController {
 
 	@Autowired
 	UserService userService;
@@ -37,19 +38,25 @@ public class LoginController {
 
 	@GetMapping("/")
 	public String init() {
-		return "index";
+		return "login";
 	}
 
-	@RequestMapping(value = "/login", method = { RequestMethod.GET, RequestMethod.POST })
+	@RequestMapping(value = "/welcome", method = { RequestMethod.GET, RequestMethod.POST })
 	public String login(HttpServletRequest request) {
-		Authentication authentication = userService.getAuthentication(preProcess(request));
-		if (authentication instanceof UsernamePasswordAuthenticationToken) {
-			request.setAttribute("accounts", processAccountResponse(accountService.findAll(authentication)));
-			request.setAttribute("transactions",
-					processTransactionResponse(transactionService.findAll(authentication)));
-			return "dashboard";
+		JSONObject authentication = userService.authenticate(preProcess(request));
+		Map<String, Object> tokenMap = authentication.toMap();
+		if (!ObjectUtils.isEmpty(tokenMap.get("token"))) {
+			return "forward:/dashboard";
 		}
-		return "index";
+		return "login";
+	}
+
+	@RequestMapping(value = "/dashboard", method = { RequestMethod.GET, RequestMethod.POST })
+	public String dashboard(HttpServletRequest request) {
+		request.setAttribute("accounts", processAccountResponse(accountService.findAll(true)));
+		request.setAttribute("transactions", processTransactionResponse(transactionService.findAll(true)));
+		request.setAttribute("activeSideBar", "dashboard");
+		return "dashboard";
 	}
 
 	private User preProcess(HttpServletRequest userRequest) {

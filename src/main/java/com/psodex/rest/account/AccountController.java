@@ -73,8 +73,4 @@ public class AccountController implements IController<Account, AccountRequest, A
 				account.getIssuingBank());
 		return accountResponse;
 	}
-	
-	public List<AccountResponse> findAll(Authentication authentication) {
-		return accountService.findAll(authentication).stream().map(account -> postProcess(account)).collect(Collectors.toList());
-	}
 }

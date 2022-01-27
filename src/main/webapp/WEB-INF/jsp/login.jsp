@@ -39,7 +39,7 @@
 	<div class="container mt-5">
 		<div class="card" style="width: 25rem;">
 			<h3 class="card-title mt-5 mx-5">Login to your account</h3>
-			<form action="login" method="post">
+			<form action="welcome" method="post">
 				<div class="form-group mt-3 mx-5">
 					<label for="email" class="mb-1">Email Address</label>
 					<input type="email" name="email"

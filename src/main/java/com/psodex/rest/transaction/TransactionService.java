@@ -82,7 +82,7 @@ public class TransactionService implements IService<Transaction> {
 		transaction.setUser(userService.getLoggedInUser());
 	}
 
-	public List<Transaction> findAll(Authentication authentication) {
-		return transactionRepository.findAllByUserId(userService.getLoggedInUser(authentication).getId());
+	public List<Transaction> findAll(boolean isFromView) {
+		return transactionRepository.findAllByUserId(userService.getLoggedInUser(isFromView).getId());
 	}
 }

@@ -84,7 +84,7 @@ public class AccountService implements IService<Account> {
 		account.setUser(userService.getLoggedInUser());
 	}
 	
-	public List<Account> findAll(Authentication authentication) {
-		return accountRepository.findAllByUserId(userService.getLoggedInUser(authentication).getId());
+	public List<Account> findAll(boolean isFromView) {
+		return accountRepository.findAllByUserId(userService.getLoggedInUser(isFromView).getId());
 	}
 }
