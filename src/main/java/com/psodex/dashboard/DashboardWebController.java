@@ -17,6 +17,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.psodex.rest.account.Account;
 import com.psodex.rest.account.AccountResponse;
 import com.psodex.rest.account.AccountService;
+import com.psodex.rest.jar.Jar;
+import com.psodex.rest.jar.JarResponse;
+import com.psodex.rest.jar.JarService;
 import com.psodex.rest.transaction.Transaction;
 import com.psodex.rest.transaction.TransactionResponse;
 import com.psodex.rest.transaction.TransactionService;
@@ -35,6 +38,9 @@ public class DashboardWebController {
 
 	@Autowired
 	TransactionService transactionService;
+
+	@Autowired
+	JarService jarService;
 
 	@GetMapping("/")
 	public String init() {
@@ -55,9 +61,9 @@ public class DashboardWebController {
 	public String dashboard(HttpServletRequest request) {
 		request.setAttribute("accounts", processAccountResponse(accountService.findAll(true)));
 		request.setAttribute("transactions", processTransactionResponse(transactionService.findAll(true)));
+		request.setAttribute("jars", processJarResponse(jarService.findAll(true)));
 		request.setAttribute("activeSideBar", "dashboard");
-		
-		// TODO: Transaction List inbound outbound display
+
 		return "dashboard";
 	}
 
@@ -88,6 +94,16 @@ public class DashboardWebController {
 						transaction.getOutboundAccount() == null ? ""
 								: String.valueOf(transaction.getOutboundAccount().getId()),
 						transaction.getOutboundAccount() == null ? "" : transaction.getOutboundAccount().getName()))
+				.collect(Collectors.toList());
+	}
+
+	private List<JarResponse> processJarResponse(List<Jar> jars) {
+		if (jars == null)
+			return null;
+		return jars.stream()
+				.map(jar -> new JarResponse(String.valueOf(jar.getId()), jar.getName(), jar.getDescription(),
+						String.valueOf(jar.getPercentage()), jar.getAvailableBalance(),
+						jar.getDateCreated().toString()))
 				.collect(Collectors.toList());
 	}
 }

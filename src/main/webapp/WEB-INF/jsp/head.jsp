@@ -48,15 +48,22 @@ body, html {
 	background-color: #F1F1F1;
 }
 
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
+input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
 }
 
 /* Firefox */
 input[type=number] {
-  -moz-appearance: textfield;
+	-moz-appearance: textfield;
+}
+
+.jar-safe {
+	color: #005600;
+}
+
+.jar-danger {
+	color: ##9a0000;
 }
 </style>
 <body>

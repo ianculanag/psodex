@@ -14,7 +14,6 @@ public class JarResponse {
 
 	private String percentage;
 
-	@JsonIgnore
 	private BigDecimal availableBalanceRaw;
 
 	private String availableBalance;
