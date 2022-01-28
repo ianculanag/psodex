@@ -36,7 +36,7 @@
 							<input type="text" class="form-control" id="currency" placeholder="PHP" style="text-align: center" readonly />
 						</div>
 						<div class="col-md-9">
-							<input type="number" class="form-control transaction-amount" name="transactionAmount" placeholder="0.00" style="text-align: right">
+							<input type="number" class="form-control transaction-amount" name="transactionAmount" step="0.01" min="0.01" placeholder="0.00" style="text-align: right">
 						</div>
 					</div>
 				</div>
@@ -89,57 +89,25 @@
 							</div>
 							<ul class="account-dropdown dropdown-menu dropdown-menu-lg-end w-75" aria-labelledby="defaultDropdown" style="">
 								<li><h6 class="dropdown-header">Select account</h6></li>
-								<li>
-									<div class="dropdown-item">
-										<input type="hidden" class="account-id" value="96">
-										<div>
-											<div class="row py-1">
-												<div class="col-md-4">
-													<h6 class="mb-0 account-select-account-name">Infor Payroll</h6>
-													<small class="account-select-account-number">1929570622</small>
-												</div>
-												<div class="col-md-8 text-end">
-													<small style="display: inline-block" class="fw-light me-1">PHP</small>
-													<h5 class="mb-0 account-select-balance" style="display: inline-block">94,266.73</h5>
-												</div>
-											</div>
-										</div>
-									</div>
-								</li>
-								<li>
-									<div class="dropdown-item">
-										<input type="hidden" class="account-id" value="97">
-										<div>
-											<div class="row py-1">
-												<div class="col-md-4">
-													<h6 class="mb-0 account-select-account-name">Yondu Payroll</h6>
-													<small class="account-select-account-number">2849234725</small>
-												</div>
-												<div class="col-md-8 text-end">
-													<small style="display: inline-block" class="fw-light me-1">PHP</small>
-													<h5 class="mb-0 account-select-balance" style="display: inline-block">55,103.12</h5>
+								<c:forEach var="account" items="${accounts}" varStatus="loopAccount">
+									<li>
+										<div class="dropdown-item">
+											<input type="hidden" class="account-id" value="${ account.accountId }">
+											<div>
+												<div class="row py-1">
+													<div class="col-md-4">
+														<h6 class="mb-0 account-select-account-name">${ account.accountName }</h6>
+														<small class="account-select-account-number">${ account.accountNumber }</small>
+													</div>
+													<div class="col-md-8 text-end">
+														<small style="display: inline-block" class="fw-light me-1">PHP</small>
+														<h5 class="mb-0 account-select-balance" style="display: inline-block">${ account.balance }</h5>
+													</div>
 												</div>
 											</div>
 										</div>
-									</div>
-								</li>
-								<li>
-									<div class="dropdown-item">
-										<input type="hidden" class="account-id" value="98">
-										<div>
-											<div class="row py-1">
-												<div class="col-md-4">
-													<h6 class="mb-0 account-select-account-name">GCash</h6>
-													<small class="account-select-account-number">639060568265</small>
-												</div>
-												<div class="col-md-8 text-end">
-													<small style="display: inline-block" class="fw-light me-1">PHP</small>
-													<h5 class="mb-0 account-select-balance" style="display: inline-block">2,700.29</h5>
-												</div>
-											</div>
-										</div>
-									</div>
-								</li>
+									</li>
+								</c:forEach>
 							</ul>
 						</div>
 					</div>
@@ -168,57 +136,25 @@
 							</div>
 							<ul class="account-dropdown dropdown-menu dropdown-menu-lg-end w-75" aria-labelledby="defaultDropdown" style="">
 								<li><h6 class="dropdown-header">Select account</h6></li>
-								<li>
-									<div class="dropdown-item">
-										<input type="hidden" class="account-id" value="96">
-										<div>
-											<div class="row py-1">
-												<div class="col-md-4">
-													<h6 class="mb-0 account-select-account-name">Infor Payroll</h6>
-													<small class="account-select-account-number">1929570622</small>
-												</div>
-												<div class="col-md-8 text-end">
-													<small style="display: inline-block" class="fw-light me-1">PHP</small>
-													<h5 class="mb-0 account-select-balance" style="display: inline-block">94,266.73</h5>
-												</div>
-											</div>
-										</div>
-									</div>
-								</li>
-								<li>
-									<div class="dropdown-item">
-										<input type="hidden" class="account-id" value="97">
-										<div>
-											<div class="row py-1">
-												<div class="col-md-4">
-													<h6 class="mb-0 account-select-account-name">Yondu Payroll</h6>
-													<small class="account-select-account-number">2849234725</small>
-												</div>
-												<div class="col-md-8 text-end">
-													<small style="display: inline-block" class="fw-light me-1">PHP</small>
-													<h5 class="mb-0 account-select-balance" style="display: inline-block">55,103.12</h5>
+								<c:forEach var="account" items="${accounts}" varStatus="loopAccount">
+									<li>
+										<div class="dropdown-item">
+											<input type="hidden" class="account-id" value="${ account.accountId }">
+											<div>
+												<div class="row py-1">
+													<div class="col-md-4">
+														<h6 class="mb-0 account-select-account-name">${ account.accountName }</h6>
+														<small class="account-select-account-number">${ account.accountNumber }</small>
+													</div>
+													<div class="col-md-8 text-end">
+														<small style="display: inline-block" class="fw-light me-1">PHP</small>
+														<h5 class="mb-0 account-select-balance" style="display: inline-block">${ account.balance }</h5>
+													</div>
 												</div>
 											</div>
 										</div>
-									</div>
-								</li>
-								<li>
-									<div class="dropdown-item">
-										<input type="hidden" class="account-id" value="98">
-										<div>
-											<div class="row py-1">
-												<div class="col-md-4">
-													<h6 class="mb-0 account-select-account-name">GCash</h6>
-													<small class="account-select-account-number">639060568265</small>
-												</div>
-												<div class="col-md-8 text-end">
-													<small style="display: inline-block" class="fw-light me-1">PHP</small>
-													<h5 class="mb-0 account-select-balance" style="display: inline-block">2,700.29</h5>
-												</div>
-											</div>
-										</div>
-									</div>
-								</li>
+									</li>
+								</c:forEach>
 							</ul>
 						</div>
 					</div>

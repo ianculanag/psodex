@@ -48,10 +48,15 @@ body, html {
 	background-color: #F1F1F1;
 }
 
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
-input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
-	-webkit-appearance: none;
-	margin: 0;
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
 }
 </style>
 <body>

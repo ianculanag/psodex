@@ -93,7 +93,7 @@ public class TransactionService implements IService<Transaction> {
 		TransactionType type = transaction.getType();
 		BigDecimal amount = transaction.getAmount();
 		if (TransactionType.INCOME == type) {
-			jarService.topUp(amount, true);
+			jarService.topUp(amount, isFromView);
 			Account inboundAccount = transaction.getInboundAccount();
 			accountService.transact(amount, inboundAccount == null ? null : inboundAccount.getId());
 		}
