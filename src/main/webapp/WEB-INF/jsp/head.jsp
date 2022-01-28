@@ -15,10 +15,24 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Overpass:wght@200;300;400;600;700;900&family=Ubuntu:wght@300&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=MuseoModerno:wght@600&display=swap" rel="stylesheet">
 </head>
 <style>
 * {
 	font-family: 'Overpass', sans-serif;
+}
+
+.logo {
+	font-family: 'MuseoModerno', cursive;
+	letter-spacing: -2px;
+	color: #777373;
+	display: inline-block;
+	font-size: 1.4em;
+	margin-top: -7.5px;
+}
+
+.logo::first-letter {
+	color: #12ADBF;
 }
 
 body, html {
@@ -26,16 +40,22 @@ body, html {
 	padding: 0;
 	width: 100%;
 	height: 100%;
+	background-color: #F1F1F1;
+	overflow-x: hidden;
 }
 
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
+.workspace {
+	background-color: #F1F1F1;
+}
+
+}
+input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
 }
 </style>
 <body>
 	<jsp:include page="navbar.jsp" />
 	<div style="width: 100vw;">
 		<jsp:include page="sidebarMenu.jsp" />
-		<div class="workspace" style="padding-left: 250px">
+		<div class="workspace" style="padding-left: 250px; padding-top: 55px;">

@@ -11,7 +11,7 @@ import com.psodex.rest.util.IService;
 
 @Service
 public class JarService implements IService<Jar> {
-	
+
 	@Autowired
 	JarRepository jarRepository;
 
@@ -32,7 +32,7 @@ public class JarService implements IService<Jar> {
 	public void save(Jar jar) {
 		setUser(jar);
 		jarRepository.save(jar);
-		
+
 	}
 
 	@Override
@@ -64,5 +64,16 @@ public class JarService implements IService<Jar> {
 
 	public void setUser(Jar jar) {
 		jar.setUser(userService.getLoggedInUser());
+	}
+
+	public void topUp(BigDecimal amount, boolean isFromView) {
+		List<Jar> jars = findAll(isFromView);
+		jars.forEach(jar -> jar.setAvailableBalance(
+				jar.getAvailableBalance().add(amount.multiply(BigDecimal.valueOf(jar.getPercentage() / 100)))));
+		jars.forEach(jar -> jarRepository.save(jar));
+	}
+
+	public List<Jar> findAll(boolean isFromView) {
+		return jarRepository.findAllByUserId(userService.getLoggedInUser(isFromView).getId());
 	}
 }

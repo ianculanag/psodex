@@ -18,7 +18,7 @@
 </style>
 <div class="row w-100">
 	<div class="form-container">
-		<div class="p-5 ms-5 me-5 mt-5 bg-light">
+		<div class="p-5 ms-5 me-5 mt-5 bg-light shadow">
 			<h5 class="text-muted mb-4">Add Transaction</h5>
 			<form action="post-transaction" method="post" class="row g-3">
 				<div class="col-md-9">

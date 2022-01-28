@@ -20,7 +20,7 @@
 	<div class="transactionsContainer">
 		<div class="p-0 ms-5 me-5 mb-5">
 			<h6 class="text-muted">Transaction History</h6>
-			<div class="list-group">
+			<div class="list-group shadow">
 				<c:set var="transactionInstance" value="${transactions}" scope="request" />
 				<jsp:include page="transactionEntry.jsp" />
 			</div>
