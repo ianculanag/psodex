@@ -28,7 +28,7 @@
 									<div class="col-12 d-flex justify-content-center text-nowrap">
 										<div class="${ jar.availableBalanceRaw > 0 ? 'jar-safe' : jar.availableBalanceRaw < 0 ? 'jar-danger' : 'text-muted' }">
 											<small class="d-inline">PHP</small>
-											<h5 class="mb-1 d-inline">${ jar.availableBalance }</h5>
+											<h5 class="mb-1 d-inline peso-format">${ jar.availableBalance }</h5>
 										</div>
 									</div>
 									<div class="col-12 d-flex justify-content-center">

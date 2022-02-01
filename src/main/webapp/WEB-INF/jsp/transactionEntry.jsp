@@ -21,7 +21,7 @@
 			<div class="col-3 text-end">
 				<div class="w-100 justify-content-between">
 					${ hasOutboundAccount ? "" : "(" } <small class="d-inline">${ hasOutboundAccount ? "" : "PHP" }</small>
-					<h5 class="mb-1 d-inline">${ hasOutboundAccount ? "-" : transaction.transactionAmount }</h5>
+					<h5 class="mb-1 d-inline peso-format">${ hasOutboundAccount ? "-" : transaction.transactionAmount }</h5>
 					${ hasOutboundAccount ? "" : ")" } <small class="text-muted d-block">${ hasOutboundAccount ? "" : transaction.outboundAccountName }</small>
 				</div>
 			</div>
@@ -30,7 +30,7 @@
 			<div class="col-3 text-end">
 				<div class="w-100 justify-content-between">
 					<small class="d-inline">${ hasInboundAccount ? "" : "PHP" }</small>
-					<h5 class="mb-1 d-inline">${ hasInboundAccount ? "-" : transaction.transactionAmount }</h5>
+					<h5 class="mb-1 d-inline peso-format">${ hasInboundAccount ? "-" : transaction.transactionAmount }</h5>
 					<small class="text-muted d-block">${ hasInboundAccount ? "" : transaction.inboundAccountName }</small>
 				</div>
 			</div>

@@ -79,8 +79,8 @@
 											<small class="account-card-input-account-number"></small>
 										</div>
 										<div class="col-md-8 text-end">
-											<small style="display: inline-block" class="fw-light me-1">PHP</small>
-											<h4 class="mb-0 account-card-input-balance" " style="display: inline-block"></h4>
+											<small class="fw-light d-inline">PHP</small>
+											<h4 class="mb-0 account-card-input-balance d-inline"></h4><small class="account-card-decimal-value"></small>
 											<small style="display: block" class="text-muted">Available Balance</small>
 										</div>
 									</div>
@@ -101,7 +101,7 @@
 													</div>
 													<div class="col-md-8 text-end">
 														<small style="display: inline-block" class="fw-light me-1">PHP</small>
-														<h5 class="mb-0 account-select-balance" style="display: inline-block">${ account.balance }</h5>
+														<h5 class="mb-0 account-select-balance peso-format" style="display: inline-block">${ account.balance }</h5>
 													</div>
 												</div>
 											</div>
@@ -126,8 +126,8 @@
 											<small class="account-card-input-account-number"></small>
 										</div>
 										<div class="col-md-8 text-end">
-											<small style="display: inline-block" class="fw-light me-1">PHP</small>
-											<h4 class="mb-0 account-card-input-balance" " style="display: inline-block"></h4>
+											<small class="fw-light d-inline">PHP</small>
+											<h4 class="mb-0 account-card-input-balance d-inline"></h4><small class="account-card-decimal-value"></small> 
 											<small style="display: block" class="text-muted">Available Balance</small>
 										</div>
 									</div>
@@ -148,7 +148,7 @@
 													</div>
 													<div class="col-md-8 text-end">
 														<small style="display: inline-block" class="fw-light me-1">PHP</small>
-														<h5 class="mb-0 account-select-balance" style="display: inline-block">${ account.balance }</h5>
+														<h5 class="mb-0 account-select-balance peso-format" style="display: inline-block">${ account.balance }</h5>
 													</div>
 												</div>
 											</div>
@@ -203,6 +203,7 @@
 		var accountName = $(this).find('.account-select-account-name').html();
 		var accountNumber = $(this).find('.account-select-account-number').html();
 		var balance = $(this).find('.account-select-balance').html();
+		var decimalValue = $(this).find('.decimal-value').html();
 		var accountId = $(this).find('.account-id').val();
 
 		var accountInput = $(this).parent().parent().parent().find(".dropdown-toggle");
@@ -215,6 +216,8 @@
 		accountInputSelected.find('.account-card-input-account-name').html(accountName);
 		accountInputSelected.find('.account-card-input-account-number').html(accountNumber);
 		accountInputSelected.find('.account-card-input-balance').html(balance);
+		accountInputSelected.find('.account-card-decimal-value').html(decimalValue);
+
 		accountInput.parent().parent().find('.accountId').val(accountId);
 	});
 </script>

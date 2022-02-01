@@ -12,7 +12,7 @@
 					<div class="col-6 d-flex text-end align-items-end flex-row-reverse text-nowrap ">
 						<div class="align-text-bottom">
 							<small class="d-inline">PHP</small>
-							<h4 class="mb-1 d-inline">${ account.balance }</h4>
+							<h4 class="mb-1 d-inline peso-format">${ account.balance }</h4>
 						</div>
 					</div>
 				</div>
