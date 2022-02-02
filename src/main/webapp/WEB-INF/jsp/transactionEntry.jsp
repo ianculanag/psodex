@@ -2,19 +2,15 @@
 <c:forEach var="transaction" items="${transactions}" varStatus="loopTransactions">
 	<div class="list-group-item list-group-item-action" aria-current="true">
 		<div class="row">
-			<div class="col-4">
+			<div class="col-6">
 				<div class="w-100 justify-content-between">
-					<h6 class="mb-1">${ transaction.details }</h6>
+					<div>
+						<h6 class="mb-1 d-inline">${ transaction.details }</h6>
+						<span class="badge rounded-pill bg-secondary ms-1 transaction-type align-top">${ transaction.transactionType }</span>
+						<span class="badge rounded-pill bg-secondary ms-1 align-top">${ transaction.jarName }</span>
+					</div>
 					<small class="text-muted">${ transaction.transactionDate }</small>
 				</div>
-			</div>
-			<div class="col-1">
-				<h5>
-					<span class="badge bg-light text-dark">${ transaction.transactionType }</span>
-				</h5>
-			</div>
-			<div class="col-1">
-				<span class="badge bg-success"></span>
 			</div>
 
 			<c:set var="hasOutboundAccount" scope="session" value="${transaction.outboundAccountName == ''}" />

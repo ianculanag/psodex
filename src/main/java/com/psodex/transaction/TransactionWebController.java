@@ -16,6 +16,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.psodex.rest.account.Account;
 import com.psodex.rest.account.AccountResponse;
 import com.psodex.rest.account.AccountService;
+import com.psodex.rest.jar.Jar;
+import com.psodex.rest.jar.JarResponse;
+import com.psodex.rest.jar.JarService;
 import com.psodex.rest.transaction.Transaction;
 import com.psodex.rest.transaction.TransactionBuilder;
 import com.psodex.rest.transaction.TransactionService;
@@ -30,10 +33,14 @@ public class TransactionWebController {
 	@Autowired
 	AccountService accountService;
 
+	@Autowired
+	JarService jarService;
+
 	@RequestMapping(value = "/add-transaction", method = RequestMethod.GET)
 	public String addTransaction(HttpServletRequest request) {
 		request.setAttribute("activeSideBar", "add-transaction");
 		request.setAttribute("accounts", processAccountResponse(accountService.findAll(true)));
+		request.setAttribute("jars", processJarResponse(jarService.findAll(true)));
 		return "addTransaction";
 	}
 
@@ -48,13 +55,14 @@ public class TransactionWebController {
 				: new Account(Integer.parseInt(transactionRequest.getParameter("inboundAccountId")));
 		Account outboundAccount = ObjectUtils.isEmpty(transactionRequest.getParameter("outboundAccountId")) ? null
 				: new Account(Integer.parseInt(transactionRequest.getParameter("outboundAccountId")));
-		// TODO: jar
+		Jar jar = ObjectUtils.isEmpty(transactionRequest.getParameter("jarId")) ? null
+				: new Jar(Integer.parseInt(transactionRequest.getParameter("jarId")));
 		return new TransactionBuilder()
 				.type(TransactionType.valueOf(transactionRequest.getParameter("transactionType").toUpperCase()))
 				.details(transactionRequest.getParameter("transactionDescription"))
 				.amount(new BigDecimal(transactionRequest.getParameter("transactionAmount")))
 				.date(LocalDate.parse(transactionRequest.getParameter("transactionDate")))
-				.inboundAccount(inboundAccount).outboundAccount(outboundAccount).build();
+				.inboundAccount(inboundAccount).outboundAccount(outboundAccount).jar(jar).build();
 	}
 
 	public List<AccountResponse> processAccountResponse(List<Account> accounts) {
@@ -63,6 +71,16 @@ public class TransactionWebController {
 		return accounts.stream()
 				.map(account -> new AccountResponse(String.valueOf(account.getId()), account.getAccountNumber(),
 						account.getName(), account.getBalance(), account.getDescription(), account.getIssuingBank()))
+				.collect(Collectors.toList());
+	}
+
+	private List<JarResponse> processJarResponse(List<Jar> jars) {
+		if (jars == null)
+			return null;
+		return jars.stream()
+				.map(jar -> new JarResponse(String.valueOf(jar.getId()), jar.getName(), jar.getDescription(),
+						String.valueOf(jar.getPercentage()), jar.getAvailableBalance(),
+						jar.getDateCreated().toString()))
 				.collect(Collectors.toList());
 	}
 

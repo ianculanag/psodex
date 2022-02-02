@@ -83,7 +83,8 @@ public class TransactionController implements IController<Transaction, Transacti
 				transaction.getInboundAccount() == null ? "" : transaction.getInboundAccount().getName(),
 				transaction.getOutboundAccount() == null ? ""
 						: String.valueOf(transaction.getOutboundAccount().getId()),
-				transaction.getOutboundAccount() == null ? "" : transaction.getOutboundAccount().getName());
+				transaction.getOutboundAccount() == null ? "" : transaction.getOutboundAccount().getName(),
+				transaction.getJar() == null ? "" : transaction.getJar().getName());
 		return transactionResponse;
 	}
 }

@@ -26,10 +26,12 @@ public class TransactionResponse {
 	private String outboundAccountId;
 
 	private String outboundAccountName;
+	
+	private String jarName;
 
 	public TransactionResponse(String transactionId, BigDecimal transactionAmountRaw, String transactionDate,
 			String details, String transactionType, String inboundAccountId, String inboundAccountName,
-			String outboundAccountId, String outboundAccountName) {
+			String outboundAccountId, String outboundAccountName, String jarName) {
 		this.transactionId = transactionId;
 		this.transactionAmountRaw = transactionAmountRaw;
 		this.transactionDate = transactionDate;
@@ -39,6 +41,7 @@ public class TransactionResponse {
 		this.inboundAccountName = inboundAccountName;
 		this.outboundAccountId = outboundAccountId;
 		this.outboundAccountName = outboundAccountName;
+		this.jarName = jarName;
 		doAfterCreation();
 	}
 
@@ -120,6 +123,14 @@ public class TransactionResponse {
 
 	public void setOutboundAccountName(String outboundAccountName) {
 		this.outboundAccountName = outboundAccountName;
+	}
+
+	public String getJarName() {
+		return jarName;
+	}
+
+	public void setJarName(String jarName) {
+		this.jarName = jarName;
 	}
 
 	private void doAfterCreation() {

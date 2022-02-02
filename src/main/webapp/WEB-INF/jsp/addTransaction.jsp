@@ -12,7 +12,8 @@
 	position: absolute;
 }
 
-.account-selected::after {
+.account-selected::after,
+.jar-selected::after {
 	display: none;
 }
 </style>
@@ -29,18 +30,18 @@
 					<label for="transactionDate" class="form-label">Date</label>
 					<input type="date" class="form-control" name="transactionDate">
 				</div>
-				<div class="col-md-6">
+				<div class="col-md-5">
 					<label for="transactionAmount" class="form-label">Amount</label>
 					<div class="row">
 						<div class="col-md-3">
-							<input type="text" class="form-control" id="currency" placeholder="PHP" style="text-align: center" readonly />
+							<input type="text" class="form-control-plaintext" id="currency" placeholder="PHP" style="text-align: center" readonly />
 						</div>
 						<div class="col-md-9">
 							<input type="number" class="form-control transaction-amount" name="transactionAmount" step="0.01" min="0.01" placeholder="0.00" style="text-align: right">
 						</div>
 					</div>
 				</div>
-				<div class="col-md-3">
+				<div class="col-md-2">
 					<label for="transactionType" class="form-label">Type</label>
 					<select id="select-transaction-type" class="form-select" name="transactionType">
 						<option>Expense</option>
@@ -50,17 +51,46 @@
 						<option>Investment</option>
 					</select>
 				</div>
-				<div class="col-md-3">
+
+				<div id="jar-select" class="col-md-5">
 					<label for="transactionJar" class="form-label">Jar</label>
-					<select id="inputState" class="form-select" name="transactionJar">
-						<option class="text-muted">Select the Jar...</option>
-						<option>Necessities</option>
-						<option>Relationship</option>
-						<option>Long-term Savings</option>
-						<option>Give back</option>
-						<option>Self-investment</option>
-						<option>Investment</option>
-					</select>
+					<input type="hidden" name="jarId" id="jarId" class="jarId">
+					<div class="btn-group w-100 dropdown">
+						<div class="dropdown-toggle form-control" id="jarDropdown" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="true">
+							<div class="jar-card-input-empty text-muted">Which jar will you use?</div>
+							<div class="jar-card-input-selected w-100 h-100 collapse">
+								<div class="row">
+									<div class="col-md-4">
+										<p class="jar-card-input-jar-name mb-0"></p>
+									</div>
+									<div class="col-md-8 position-absolute text-end end-0 text-nowrap">
+										<small style="display: inline-block" class="fw-light me-1">PHP</small>
+										<h5 class="mb-0 jar-card-input-balance" style="display: inline-block"></h5><small class="jar-card-input-decimal-value"></small>
+									</div>
+								</div>
+							</div>
+						</div>
+						<ul class="jar-dropdown dropdown-menu w-100 overflow-auto" aria-labelledby="defaultDropdown" style="max-height: 200px;">
+							<c:forEach var="jar" items="${jars}" varStatus="loopJars">
+								<li>
+									<div class="dropdown-item jar-dropdown-item">
+										<input type="hidden" class="jar-id" value="${ jar.jarId }">
+										<div>
+											<div class="row py-1">
+												<div class="col-md-4">
+													<p class="jar-select-jar-name mb-0 text-black-50">${ jar.jarName }</p>
+												</div>
+												<div class="col-md-8 text-end text-nowrap">
+													<small style="display: inline-block" class="fw-light me-1">PHP</small>
+													<h5 class="mb-0 jar-select-balance peso-format" style="display: inline-block">${ jar.availableBalance }</h5>
+												</div>
+											</div>
+										</div>
+									</div>
+								</li>
+							</c:forEach>
+						</ul>
+					</div>
 				</div>
 
 				<div id="bound-accounts" class="row g-3">
@@ -91,7 +121,7 @@
 								<li><h6 class="dropdown-header">Select account</h6></li>
 								<c:forEach var="account" items="${accounts}" varStatus="loopAccount">
 									<li>
-										<div class="dropdown-item">
+										<div class="dropdown-item account-dropdown-item">
 											<input type="hidden" class="account-id" value="${ account.accountId }">
 											<div>
 												<div class="row py-1">
@@ -138,7 +168,7 @@
 								<li><h6 class="dropdown-header">Select account</h6></li>
 								<c:forEach var="account" items="${accounts}" varStatus="loopAccount">
 									<li>
-										<div class="dropdown-item">
+										<div class="dropdown-item account-dropdown-item">
 											<input type="hidden" class="account-id" value="${ account.accountId }">
 											<div>
 												<div class="row py-1">
@@ -180,26 +210,39 @@
 
 		$('#inbound-account-select').find('.account-card-input-empty').removeClass('collapse');
 		$('#inbound-account-select').find('.account-card-input-selected').addClass('collapse');
+		
+		$('.account-selected').each(function(index) {
+			$(this).removeClass('account-selected');
+		});
+		
+		$('#jar-select').find('.jar-card-input-empty').removeClass('collapse');
+		$('#jar-select').find('.jar-card-input-selected').addClass('collapse');
+		
+		$('.jar-selected').removeClass('jar-selected');
 
 		$('#inboundAccountId').val('');
 		$('#outboundAccountId').val('');
+		$('#jarId').val('');
 
 		var transactionType = $(this).val();
 		if (transactionType == 'Transfer') {
 			$('#inbound-account-select').removeClass('collapse');
 			$('#outbound-account-select').removeClass('collapse');
+			$('#jar-select').addClass('collapse');
 			return;
 		}
 		if (transactionType == 'Income') {
 			$('#inbound-account-select').removeClass('collapse');
 			$('#outbound-account-select').addClass('collapse');
+			$('#jar-select').addClass('collapse');
 			return;
 		}
 		$('#inbound-account-select').addClass('collapse');
 		$('#outbound-account-select').removeClass('collapse');
+		$('#jar-select').removeClass('collapse');
 	});
 
-	$('.dropdown-item').click(function() {
+	$('.account-dropdown-item').click(function() {
 		var accountName = $(this).find('.account-select-account-name').html();
 		var accountNumber = $(this).find('.account-select-account-number').html();
 		var balance = $(this).find('.account-select-balance').html();
@@ -219,6 +262,26 @@
 		accountInputSelected.find('.account-card-decimal-value').html(decimalValue);
 
 		accountInput.parent().parent().find('.accountId').val(accountId);
+	});
+
+	$('.jar-dropdown-item').click(function() {
+		var jarName = $(this).find('.jar-select-jar-name').html();
+		var balance = $(this).find('.jar-select-balance').html();
+		var decimalValue = $(this).find('.decimal-value').html();
+		var jarId = $(this).find('.jar-id').val();
+
+		var jarInput = $(this).parent().parent().parent().find(".dropdown-toggle");
+
+		jarInput.addClass('jar-selected');
+		jarInput.find('.jar-card-input-empty').addClass('collapse');
+
+		var jarInputSelected = jarInput.find('.jar-card-input-selected');
+		jarInputSelected.removeClass('collapse');
+		jarInputSelected.find('.jar-card-input-jar-name').html(jarName);
+		jarInputSelected.find('.jar-card-input-balance').html(balance);
+		jarInputSelected.find('.jar-card-input-decimal-value').html(decimalValue);
+
+		jarInput.parent().parent().parent().find('.jarId').val(jarId);
 	});
 </script>
 <jsp:include page="footer.jsp" />

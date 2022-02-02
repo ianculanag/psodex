@@ -11,6 +11,11 @@
 				$(this).after("<small class='decimal-value'>" + decimal + "</small>");
 			}
 		});
+		
+		$(".transaction-type").each(function() {
+			var value = $(this).html();
+			$(this).html(value.charAt(0).toUpperCase() + value.slice(1).toLowerCase());
+		})
 	});
 </script>
 </body>
