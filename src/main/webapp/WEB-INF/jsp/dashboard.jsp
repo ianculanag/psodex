@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:set var="activeSideBar" value="${activeSideBar}" scope="request" />
 <jsp:include page="head.jsp" />
 <div class="row w-100">
 	<div class="accountsContainer">

@@ -52,7 +52,7 @@ public class DashboardWebController {
 		JSONObject authentication = userService.authenticate(preProcess(request));
 		Map<String, Object> tokenMap = authentication.toMap();
 		if (!ObjectUtils.isEmpty(tokenMap.get("token"))) {
-			return "forward:/dashboard";
+			return "redirect:/dashboard";
 		}
 		return "login";
 	}

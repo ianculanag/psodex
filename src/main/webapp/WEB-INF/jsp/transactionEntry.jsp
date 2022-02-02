@@ -6,7 +6,7 @@
 				<div class="w-100 justify-content-between">
 					<div>
 						<h6 class="mb-1 d-inline">${ transaction.details }</h6>
-						<span class="badge rounded-pill bg-secondary ms-1 transaction-type align-top">${ transaction.transactionType }</span>
+						<span class="badge bg-secondary ms-1 transaction-type align-top">${ transaction.transactionType }</span>
 						<span class="badge rounded-pill bg-secondary ms-1 align-top">${ transaction.jarName }</span>
 					</div>
 					<small class="text-muted">${ transaction.transactionDate }</small>
