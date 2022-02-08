@@ -22,7 +22,7 @@ import com.dabi.util.IController;
 @CrossOrigin(origins = "http://localhost:3000")
 @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
 public class JarController implements IController<Jar, JarRequest, JarResponse> {
-	
+
 	@Autowired
 	JarService jarService;
 
@@ -42,7 +42,7 @@ public class JarController implements IController<Jar, JarRequest, JarResponse> 
 	@PostMapping
 	public void save(@RequestBody JarRequest jarRequest) {
 		jarService.save(preProcess(jarRequest));
-		
+
 	}
 
 	@Override
@@ -60,7 +60,7 @@ public class JarController implements IController<Jar, JarRequest, JarResponse> 
 	@Override
 	public Jar preProcess(JarRequest jarRequest) {
 		return new Jar(jarRequest.getJarName(), jarRequest.getDescription(), jarRequest.getPercentage(),
-				jarRequest.getAvailableBalance(), jarRequest.getDateCreated(), null);
+				jarRequest.getAvailableBalance(), jarRequest.getDateCreated(), null, null);
 	}
 
 	@Override
@@ -68,6 +68,7 @@ public class JarController implements IController<Jar, JarRequest, JarResponse> 
 		if (jar == null)
 			return null;
 		return new JarResponse(String.valueOf(jar.getId()), jar.getName(), jar.getDescription(),
-				String.valueOf(jar.getPercentage()), jar.getAvailableBalance(), jar.getDateCreated().toString());
+				String.valueOf(jar.getPercentage()), jar.getAvailableBalance(), jar.getDateCreated().toString(),
+				jar.getColor());
 	}
 }

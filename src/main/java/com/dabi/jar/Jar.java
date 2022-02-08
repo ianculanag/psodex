@@ -29,10 +29,12 @@ public class Jar {
 	private BigDecimal availableBalance;
 
 	private LocalDate dateCreated;
-	
+
 	@ManyToOne(targetEntity = User.class)
 	@JoinColumn(name = "userId")
 	private User user;
+
+	private String color;
 
 	public Jar() {
 
@@ -42,14 +44,15 @@ public class Jar {
 		this.id = id;
 	}
 
-	public Jar(String name, String description, double percentage, BigDecimal availableBalance,
-			LocalDate dateCreated, User user) {
+	public Jar(String name, String description, double percentage, BigDecimal availableBalance, LocalDate dateCreated,
+			User user, String color) {
 		this.name = name;
 		this.description = description;
 		this.percentage = percentage;
 		this.availableBalance = availableBalance;
 		this.dateCreated = dateCreated;
 		this.user = user;
+		this.color = color;
 	}
 
 	public int getId() {
@@ -106,6 +109,14 @@ public class Jar {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	public String getColor() {
+		return color;
+	}
+
+	public void setColor(String color) {
+		this.color = color;
 	}
 
 }

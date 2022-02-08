@@ -1,9 +1,6 @@
 package com.dabi.jar;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class JarResponse {
 
@@ -15,24 +12,26 @@ public class JarResponse {
 
 	private String percentage;
 
-	@JsonIgnore
 	private BigDecimal availableBalanceRaw;
 
 	private String availableBalance;
 
 	private String dateCreated;
 
+	private String jarColor;
+
 	public JarResponse() {
 	}
 
 	public JarResponse(String jarId, String jarName, String description, String percentage,
-			BigDecimal availableBalanceRaw, String dateCreated) {
+			BigDecimal availableBalanceRaw, String dateCreated, String jarColor) {
 		this.jarId = jarId;
 		this.jarName = jarName;
 		this.description = description;
 		this.percentage = percentage;
 		this.availableBalanceRaw = availableBalanceRaw;
 		this.dateCreated = dateCreated;
+		this.jarColor = jarColor;
 		doAfterCreation();
 	}
 
@@ -91,7 +90,15 @@ public class JarResponse {
 	public void setDateCreated(String dateCreated) {
 		this.dateCreated = dateCreated;
 	}
-	
+
+	public String getJarColor() {
+		return jarColor;
+	}
+
+	public void setJarColor(String jarColor) {
+		this.jarColor = jarColor;
+	}
+
 	private void doAfterCreation() {
 		this.availableBalance = String.format("%,.2f",
 				this.availableBalanceRaw == null ? 0 : this.availableBalanceRaw.doubleValue());
